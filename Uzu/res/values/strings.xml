@@ -19,5 +19,7 @@
     <string name="menu_collection">Collection</string>
     <string name="title_activity_drop">DropActivity</string>
     <string name="title_activity_collection">CollectionActivity</string>
+    
+    <string name="scan_button">Scan Button</string>
 
 </resources>
