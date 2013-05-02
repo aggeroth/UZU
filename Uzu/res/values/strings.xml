@@ -3,9 +3,21 @@
 
     <string name="app_name">Uzu</string>
     <string name="action_settings">Settings</string>
-    <string name="hello_world">Hello world!</string>
+    
+    <string name="scan_message">Scan Page</string>
+    
+    <string name="drop_message">Drop Page</string>
+    <string name="input_subject_hint">Item Subject</string>
+    <string name="input_text_hint">Item Content</string>
+    <string name="button_draft">Draft</string>
+    <string name="button_drop">Drop</string>
+    
+    <string name="collection_message">Collection Page</string>
+    
     <string name="menu_scan">Scan</string>
     <string name="menu_drop">Drop</string>
     <string name="menu_collection">Collection</string>
+    <string name="title_activity_drop">DropActivity</string>
+    <string name="title_activity_collection">CollectionActivity</string>
 
 </resources>
