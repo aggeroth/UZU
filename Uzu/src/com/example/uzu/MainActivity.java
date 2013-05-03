@@ -26,7 +26,6 @@ public class MainActivity extends Activity {
 		final Animation an = AnimationUtils.loadAnimation(this, R.anim.spin);
 		
 		ImageButton imgBtn = (ImageButton) findViewById(R.id.imageButton1);
-
 		
 		imgBtn.setOnClickListener(new View.OnClickListener() {
 
