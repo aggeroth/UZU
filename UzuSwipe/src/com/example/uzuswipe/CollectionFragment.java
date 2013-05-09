@@ -12,7 +12,6 @@ import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
 public class CollectionFragment extends Fragment {
@@ -35,7 +34,7 @@ public class CollectionFragment extends Fragment {
 		ListView listView = (ListView)view.findViewById(R.id.itemCollection);
 		
 		//Displaying Items using ArrayAdapter
-		ArrayAdapter<Item> itemAdapter = new ArrayAdapter<Item>(activity, android.R.layout.simple_list_item_1, MainActivity.items);
+		ArrayAdapter<Item> itemAdapter = new ArrayAdapter<Item>(activity, android.R.layout.simple_list_item_1, items);
 		//ArrayAdapter<Item> itemAdapter = new ArrayAdapter<Item>(this, android.R.layout.simple_list_item_1, MainActivity.items);
 		listView.setAdapter(itemAdapter);
 		

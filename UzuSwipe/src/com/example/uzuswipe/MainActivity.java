@@ -11,14 +11,6 @@ import android.view.Menu;
 
 public class MainActivity extends Activity {
 	
-	static final Item[] items = {
-		new Item("Item 1", "This is Item 1"),
-		new Item("Item 2", "This is Item 2"),
-		new Item("Item 3", "This is Item 3"),
-		new Item("Item 4", "This is Item 4"),
-		new Item("Item 5", "This is Item 5")
-	};
-	
 	@SuppressLint("CutPasteId")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -31,12 +23,14 @@ public class MainActivity extends Activity {
 		
 		//Set up three tabs
 		Tab tab = actionBar.newTab();
+		//Scan Tab
 		String labelScan = getResources().getString(R.string.menu_scan);
 		tab.setText(R.string.menu_scan);
 		TabListener<ScanFragment> scanTab = new TabListener<ScanFragment>(this, labelScan, ScanFragment.class);
 		tab.setTabListener(scanTab);
 		actionBar.addTab(tab);
 		
+		//Drop Tab
 		String labelDrop = getResources().getString(R.string.menu_drop);
 		tab = actionBar.newTab();
 		tab.setText(R.string.menu_drop);
@@ -44,6 +38,7 @@ public class MainActivity extends Activity {
 		tab.setTabListener(dropTab);
 		actionBar.addTab(tab);
 		
+		//Collection Tab
 		String labelCollection = getResources().getString(R.string.menu_drop);
 		tab = actionBar.newTab();
 		tab.setText(R.string.menu_collection);
@@ -90,4 +85,5 @@ public class MainActivity extends Activity {
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
+	
 }
