@@ -12,29 +12,34 @@ import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
 public class CollectionFragment extends Fragment {
-	
-	static final Item[] items = {
-		new Item("Item 1", "This is Item 1"),
-		new Item("Item 2", "This is Item 2"),
-		new Item("Item 3", "This is Item 3"),
-		new Item("Item 4", "This is Item 4"),
-		new Item("Item 5", "This is Item 5")
+			
+	static final UzuFragment[] items = {
+		UzuFragment.newInstance("Item 1", "This is Item 1", (float)49.23232, (float)123.8987868),
+		UzuFragment.newInstance("Item 2", "This is Item 2", (float)49.23232, (float)123.8987868),
+		UzuFragment.newInstance("Item 3", "This is Item 3", (float)49.23232, (float)123.8987868),
+		UzuFragment.newInstance("Item 4", "This is Item 4", (float)49.23232, (float)123.8987868),
+		UzuFragment.newInstance("Item 5", "This is Item 5", (float)49.23232, (float)123.8987868)
 	};
+	
+	UzuFragment item;
 	
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
 		if(container == null){
 			return null;
 		}
+		
 		final Activity activity = getActivity();
 		View view = (LinearLayout)inflater.inflate(R.layout.fragment_collection, container, false);
 		
 		ListView listView = (ListView)view.findViewById(R.id.itemCollection);
 		
 		//Displaying Items using ArrayAdapter
-		ArrayAdapter<Item> itemAdapter = new ArrayAdapter<Item>(activity, android.R.layout.simple_list_item_1, items);
+		ArrayAdapter<UzuFragment> itemAdapter = new ArrayAdapter<UzuFragment>(activity, 
+				android.R.layout.simple_list_item_1, items);
 		//ArrayAdapter<Item> itemAdapter = new ArrayAdapter<Item>(this, android.R.layout.simple_list_item_1, MainActivity.items);
 		listView.setAdapter(itemAdapter);
 		
@@ -42,24 +47,18 @@ public class CollectionFragment extends Fragment {
 		listView.setOnItemClickListener(new OnItemClickListener(){
 		@Override
 		public void onItemClick(AdapterView<?> parent, View view, int position, long id){
-			/*String item = "Subject: " + MainActivity.items[position].getItemSubject() + "\n" + "Content: " + MainActivity.items[position].getItemContent();
-			Toast.makeText(activity, item, Toast.LENGTH_SHORT).show(); */
 			
-			TextView subject = (TextView)view.findViewById(R.id.textView2);
-			TextView content = (TextView)view.findViewById(R.id.textView3);
+			Intent intent = new Intent(activity, ItemActivity.class);
 			
-			
-			
-			String subjectTitle = items[position].getItemSubject();	
-			String subjectContent = items[position].getItemContent();
-			
-			Intent intent = new Intent(getActivity(), ItemActivity.class);
-			intent.putExtra("subject", subjectTitle);
-			intent.putExtra("content", subjectContent);
+			intent.putExtra("position", position);
+			//intent.putExtra("subject", subjectTitle);
+			//intent.putExtra("content", subjectContent);
 			startActivity(intent);
 		}
 		});
 		
 		return view;
 	}
+
+
 }

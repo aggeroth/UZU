@@ -1,35 +1,54 @@
 package com.example.uzuswipe;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
+
 
 public class ItemActivity extends FragmentActivity {
-
+	MyPageAdapter pageAdapter;
+	
 	String subjectTitle;
 	String subjectContent;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_item);
+		setContentView(R.layout.fragment_views);
 		
-		TextView subject = (TextView)findViewById(R.id.textView2);
-		TextView content = (TextView)findViewById(R.id.textView3);
-		Bundle extras = getIntent().getExtras();
-		if (extras != null) {
-		    subjectTitle = extras.getString("subject");
-		    subjectContent = extras.getString("content");
-		}
+		//Grabs the position of the page from the previous page
+		int prePosition = getIntent().getIntExtra("position", 0); //The Zero is just a random default number
 		
-		subject.setText(subjectTitle);
-		content.setText(subjectContent);
+		//Creates an array of fragments from CollectionFragment
+		UzuFragment[] fragments = CollectionFragment.items;
+        
+        pageAdapter = new MyPageAdapter(getSupportFragmentManager(), fragments);
+        
+        ViewPager pager = (ViewPager)findViewById(R.id.viewpager);
+        pager.setAdapter(pageAdapter);
+        pager.setCurrentItem(prePosition);
+        
 	}
-	
+		
+	private class MyPageAdapter extends FragmentPagerAdapter {
+    	private UzuFragment[] fragments;
+
+        public MyPageAdapter(FragmentManager fm, UzuFragment[] fragments) {
+            super(fm);
+            this.fragments = fragments;
+        }
+        @Override
+        public Fragment getItem(int position) {
+            return this.fragments[position];
+        }
+     
+        @Override
+        public int getCount() {
+            return this.fragments.length;
+        }
+    }
 
 }
