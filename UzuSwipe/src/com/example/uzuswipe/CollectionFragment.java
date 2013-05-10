@@ -1,5 +1,8 @@
 package com.example.uzuswipe;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -16,7 +19,9 @@ import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
 public class CollectionFragment extends Fragment {
-			
+	
+	ScanFragment scanFragment;
+	
 	static final UzuFragment[] items = {
 		UzuFragment.newInstance("Item 1", "This is Item 1", (float)49.23232, (float)123.8987868),
 		UzuFragment.newInstance("Item 2", "This is Item 2", (float)49.23232, (float)123.8987868),
@@ -31,16 +36,27 @@ public class CollectionFragment extends Fragment {
 		if(container == null){
 			return null;
 		}
+		try{
+			for(int i = 0; i < scanFragment.uzuList.size(); i++) {
+				System.out.println(scanFragment.uzuList.get(i).getSubject());
+			}
+		} catch (Exception e) {
+			System.out.println("this is an error");
+		}
+		
 		
 		final Activity activity = getActivity();
 		View view = (LinearLayout)inflater.inflate(R.layout.fragment_collection, container, false);
 		
 		ListView listView = (ListView)view.findViewById(R.id.itemCollection);
 		
+		
 		//Displaying Items using ArrayAdapter
 		ArrayAdapter<UzuFragment> itemAdapter = new ArrayAdapter<UzuFragment>(activity, 
-				android.R.layout.simple_list_item_1, items);
+				R.layout.list_view, items );
 		//ArrayAdapter<Item> itemAdapter = new ArrayAdapter<Item>(this, android.R.layout.simple_list_item_1, MainActivity.items);
+		
+		
 		listView.setAdapter(itemAdapter);
 		
 		//Specifying what happens when one item is clicked.

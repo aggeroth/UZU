@@ -143,4 +143,13 @@ public class ScanFragment extends Fragment {
 			imgBtn.setClickable(true);
 		}
 	}
+
+	public List<Uzu> getUzuList() {
+		return uzuList;
+	}
+
+	public void setUzuList(List<Uzu> uzuList) {
+		this.uzuList = uzuList;
+	}
+	
 }
