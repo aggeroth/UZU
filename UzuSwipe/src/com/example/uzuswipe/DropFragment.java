@@ -73,7 +73,12 @@ public class DropFragment extends Fragment {
 				item.setLatitude((float)loc.getLatitude());
 				item.setLongitude((float)loc.getLongitude());
 				item.setLife(life);
-				item.setImage(null);
+				
+				System.out.println("The beginning");
+				byte[] cookie = null;	
+				item.setImage(cookie);
+				System.out.println("The End");
+				
 				Log.d("UZU", "point 3");
 				JSONObject newItem = createJSON(item);
 				Log.d("UZU", "point 4: " + newItem.toString());
