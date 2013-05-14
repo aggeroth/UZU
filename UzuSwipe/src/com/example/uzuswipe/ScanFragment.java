@@ -36,6 +36,7 @@ public class ScanFragment extends Fragment {
 	String uzuString = "nothing";
 	GPSTracker tracker;
 	UzuScanService uzuScan;
+	List<Uzu> uzuList2;
 	
 	static final String url = "http://www.aggeroth.com:8080/RestEasyServices/ocean/trawl/";
 	
@@ -61,9 +62,10 @@ public class ScanFragment extends Fragment {
 				Log.d("UZU", completeURL);
 				uzuScan = new UzuScanService(completeURL);
 				uzuScan.execute();
+				uzuList2 = uzuList;
 			}
 		});
-		
+		System.out.println("the uzu list" + uzuList2);
 		return view;
 	}
 	
@@ -145,7 +147,7 @@ public class ScanFragment extends Fragment {
 	}
 
 	public List<Uzu> getUzuList() {
-		return uzuList;
+		return uzuList2;
 	}
 
 	public void setUzuList(List<Uzu> uzuList) {

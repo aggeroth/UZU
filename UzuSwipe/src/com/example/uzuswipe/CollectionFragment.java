@@ -22,6 +22,8 @@ public class CollectionFragment extends Fragment {
 	
 	ScanFragment scanFragment;
 	
+	List<Uzu> uzuFragments;
+	
 	static final UzuFragment[] items = {
 		UzuFragment.newInstance("Item 1", "This is Item 1", (float)49.23232, (float)123.8987868),
 		UzuFragment.newInstance("Item 2", "This is Item 2", (float)49.23232, (float)123.8987868),
@@ -37,8 +39,10 @@ public class CollectionFragment extends Fragment {
 			return null;
 		}
 		try{
-			for(int i = 0; i < scanFragment.uzuList.size(); i++) {
-				System.out.println(scanFragment.uzuList.get(i).getSubject());
+			uzuFragments = scanFragment.getUzuList();
+			for(int i = 0; i < uzuFragments.size(); i++) {
+				System.out.println(uzuFragments.get(i).getSubject());
+				
 			}
 		} catch (Exception e) {
 			System.out.println("this is an error");
@@ -55,8 +59,7 @@ public class CollectionFragment extends Fragment {
 		ArrayAdapter<UzuFragment> itemAdapter = new ArrayAdapter<UzuFragment>(activity, 
 				R.layout.list_view, items );
 		//ArrayAdapter<Item> itemAdapter = new ArrayAdapter<Item>(this, android.R.layout.simple_list_item_1, MainActivity.items);
-		
-		
+				
 		listView.setAdapter(itemAdapter);
 		
 		//Specifying what happens when one item is clicked.
