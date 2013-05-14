@@ -33,13 +33,22 @@ private static final long serialVersionUID = 1L;
 		this.death = death;
 	}
 	
-	public Uzu(float longitude, float latitude, String subject, String message, byte[] image, int life) {
+	public Uzu(double longitude, double latitude, String subject, String message, byte[] image, int life) {
 		this.longitude = longitude;
 		this.latitude = latitude;
 		this.subject = subject;
 		this.message = message;
 		this.image = image;
 		this.life = life;
+	}
+	
+	public Uzu(double longitude, double latitude, String subject, String message, byte[] image, Calendar death) {
+		this.longitude = longitude;
+		this.latitude = latitude;
+		this.subject = subject;
+		this.message = message;
+		this.image = image;
+		this.death = death;
 	}
 
 	public int getUzuID() {

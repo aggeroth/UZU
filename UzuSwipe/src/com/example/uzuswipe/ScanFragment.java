@@ -123,6 +123,10 @@ public class ScanFragment extends Fragment {
 		
 		protected void onPostExecute(String results) {
 			Log.d("UZU", "Result: " + results);
+			System.out.println("MAKING DATABSEHANDLER");
+			DatabaseHandler db = new DatabaseHandler(getActivity());
+			System.out.println("DATABSEHANDLER MADE");
+			
 			if (results!=null) {
 				try{
 					UzuJSONParser parser = new UzuJSONParser(results);
@@ -130,6 +134,12 @@ public class ScanFragment extends Fragment {
 					uzuString = "";
 					for(int i = 0; i < uzuList.size(); i++){
 						Uzu temp = uzuList.get(i);
+						
+						System.out.println("ADDING ITEM");
+						db.addUZU(new Uzu(temp.getLongitude(), temp.getLatitude(), temp.getSubject(), temp.getMessage(), temp.getImage(), temp.getDeath()));
+						System.out.println("ITEM ADDED");
+						
+						
 						uzuString += "Uzu: " + i + "\n" +
 									"Subject: " + temp.getSubject() + "\n" +
 									"Message: " + temp.getMessage() + "\n" +
