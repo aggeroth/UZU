@@ -66,18 +66,20 @@ public class DropFragment extends Fragment {
 				textField.setText("");
 				Log.d("UZU", "point 2");
 				int life = 4;
+				
 				Uzu item = new Uzu();
+				System.out.println("this actulaly prints the item");
 				item.setSubject(subject);
+				System.out.println(subject);
 				item.setMessage(text);
+				System.out.println(text);
 				Location loc = tracker.getLocation();
+				System.out.println(loc);
 				item.setLatitude((float)loc.getLatitude());
 				item.setLongitude((float)loc.getLongitude());
 				item.setLife(life);
-				
-				System.out.println("The beginning");
-				byte[] cookie = null;	
-				item.setImage(cookie);
-				System.out.println("The End");
+
+				item.setImage(null);
 				
 				Log.d("UZU", "point 3");
 				JSONObject newItem = createJSON(item);
