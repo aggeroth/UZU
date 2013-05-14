@@ -69,15 +69,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	        	uzu.setSubject(cursor.getString(3));
 	        	uzu.setMessage(cursor.getString(4));
 	        	
-	            Blob blob = null;
-	            try {
-					blob.setBytes(1, cursor.getBlob(5));
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-					System.out.println("Convert to blob failed");
-				}
-	        	uzu.setImage(blob);
+	        	uzu.setImage(cursor.getString(5).getBytes());
 	        	
 	        	Calendar birth = Calendar.getInstance();
 	            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd HH:mm:ss");

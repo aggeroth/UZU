@@ -56,18 +56,7 @@ public class UzuJSONParser {
 	             String death = u.getString(TAG_DEATH);
 	             String image = u.getString(TAG_IMAGE);
 	             
-	             byte[] byteContent = image.getBytes();
-	             Blob blob = null;
-	             try {
-					blob.setBytes(1, byteContent);
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-					System.out.println("cannot convert to blob");
-				}
-
-	             
-	             Uzu uzu = new Uzu(Float.parseFloat(longitude), Float.parseFloat(latitude), subject, message, blob, Integer.parseInt(life));
+	             Uzu uzu = new Uzu(Float.parseFloat(longitude), Float.parseFloat(latitude), subject, message, image.getBytes(), Integer.parseInt(life));
 	             uzuList.add(uzu);
 	             Log.d("UZU", "loop 2 " + i);
 	        }

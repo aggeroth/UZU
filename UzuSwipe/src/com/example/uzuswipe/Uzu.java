@@ -13,7 +13,7 @@ private static final long serialVersionUID = 1L;
 	private double latitude;
 	private String subject;
 	private String message;
-	private Blob image;
+	private byte[] image;
 	private Calendar birth;
 	private int life; 
 	private Calendar death;
@@ -21,7 +21,7 @@ private static final long serialVersionUID = 1L;
 	
 	public Uzu(){}
 	
-	public Uzu(int itemID, float longitude, float latitude, String subject, String message, Blob image, Calendar birth, int life, Calendar death) {
+	public Uzu(int itemID, float longitude, float latitude, String subject, String message, byte[] image, Calendar birth, int life, Calendar death) {
 		this.uzuID = itemID;
 		this.longitude = longitude;
 		this.latitude = latitude;
@@ -33,7 +33,7 @@ private static final long serialVersionUID = 1L;
 		this.death = death;
 	}
 	
-	public Uzu(float longitude, float latitude, String subject, String message, Blob image, int life) {
+	public Uzu(float longitude, float latitude, String subject, String message, byte[] image, int life) {
 		this.longitude = longitude;
 		this.latitude = latitude;
 		this.subject = subject;
@@ -114,11 +114,11 @@ private static final long serialVersionUID = 1L;
 		categoryID = id;
 	}
 
-	public Blob getImage() {
+	public byte[] getImage() {
 		return image;
 	}
 
-	public void setImage(Blob image) {
+	public void setImage(byte[] image) {
 		this.image = image;
 	}
 	
