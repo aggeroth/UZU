@@ -1,5 +1,7 @@
 package com.example.uzuswipe;
 
+import java.sql.Blob;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +24,7 @@ public class UzuJSONParser {
     private static final String TAG_BIRTH = "birth";
     private static final String TAG_LIFE = "life";
     private static final String TAG_DEATH = "death";
-    private static final String TAG_HASIMAGE = "hasImages";
+    private static final String TAG_IMAGE = "image";
 	
 	String uzuJSONString;
     JSONArray uzuArray;
@@ -52,9 +54,20 @@ public class UzuJSONParser {
 	             String birth = u.getString(TAG_BIRTH);
 	             String life = u.getString(TAG_LIFE);
 	             String death = u.getString(TAG_DEATH);
-	             String image = u.getString(TAG_HASIMAGE);
+	             String image = u.getString(TAG_IMAGE);
 	             
-	             Uzu uzu = new Uzu(Float.parseFloat(longitude), Float.parseFloat(latitude), subject, message, Boolean.getBoolean(image), Integer.parseInt(life));
+	             byte[] byteContent = image.getBytes();
+	             Blob blob = null;
+	             try {
+					blob.setBytes(1, byteContent);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					System.out.println("cannot convert to blob");
+				}
+
+	             
+	             Uzu uzu = new Uzu(Float.parseFloat(longitude), Float.parseFloat(latitude), subject, message, blob, Integer.parseInt(life));
 	             uzuList.add(uzu);
 	             Log.d("UZU", "loop 2 " + i);
 	        }

@@ -1,6 +1,7 @@
 package com.example.uzuswipe;
 
 import java.io.Serializable;
+import java.sql.Blob;
 import java.util.Calendar;
 
 public class Uzu implements Serializable {
@@ -12,7 +13,7 @@ private static final long serialVersionUID = 1L;
 	private double latitude;
 	private String subject;
 	private String message;
-	private boolean hasImages;
+	private Blob image;
 	private Calendar birth;
 	private int life; 
 	private Calendar death;
@@ -20,24 +21,24 @@ private static final long serialVersionUID = 1L;
 	
 	public Uzu(){}
 	
-	public Uzu(int itemID, float longitude, float latitude, String subject, String message, boolean hasImages, Calendar birth, int life, Calendar death) {
+	public Uzu(int itemID, float longitude, float latitude, String subject, String message, Blob image, Calendar birth, int life, Calendar death) {
 		this.uzuID = itemID;
 		this.longitude = longitude;
 		this.latitude = latitude;
 		this.subject = subject;
 		this.message = message;
-		this.hasImages = hasImages;
+		this.image = image;
 		this.birth = birth;
 		this.life = life;
 		this.death = death;
 	}
 	
-	public Uzu(float longitude, float latitude, String subject, String message, boolean hasImages, int life) {
+	public Uzu(float longitude, float latitude, String subject, String message, Blob image, int life) {
 		this.longitude = longitude;
 		this.latitude = latitude;
 		this.subject = subject;
 		this.message = message;
-		this.hasImages = hasImages;
+		this.image = image;
 		this.life = life;
 	}
 
@@ -81,14 +82,6 @@ private static final long serialVersionUID = 1L;
 		this.message = message;
 	}
 
-	public boolean isHasImages() {
-		return hasImages;
-	}
-
-	public void setHasImages(boolean hasImages) {
-		this.hasImages = hasImages;
-	}
-
 	public Calendar getBirth() {
 		return birth;
 	}
@@ -120,5 +113,15 @@ private static final long serialVersionUID = 1L;
 	public void setCategoryID(int id){
 		categoryID = id;
 	}
+
+	public Blob getImage() {
+		return image;
+	}
+
+	public void setImage(Blob image) {
+		this.image = image;
+	}
+	
+	
 
 }

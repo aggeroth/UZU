@@ -2,6 +2,7 @@ package com.example.uzuswipe;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.Blob;
 import java.util.Calendar;
 
 import org.apache.http.HttpEntity;
@@ -72,7 +73,7 @@ public class DropFragment extends Fragment {
 				item.setLatitude((float)loc.getLatitude());
 				item.setLongitude((float)loc.getLongitude());
 				item.setLife(life);
-				item.setHasImages(false);
+				item.setImage(null);
 				Log.d("UZU", "point 3");
 				JSONObject newItem = createJSON(item);
 				Log.d("UZU", "point 4: " + newItem.toString());
@@ -103,7 +104,7 @@ public class DropFragment extends Fragment {
 		    object.put("messageBody", item.getMessage());
 		    object.put("birth", (Calendar)item.getBirth());
 		    object.put("death", (Calendar)item.getDeath());
-		    object.put("hasImages", (Boolean)item.isHasImages());
+		    object.put("hasImages", (Blob)item.getImage());
 		    object.put("life", (Integer)item.getLife());
 		    object.put("categoryID", (Integer)item.getCategoryID());
 		  } catch (JSONException e) {
