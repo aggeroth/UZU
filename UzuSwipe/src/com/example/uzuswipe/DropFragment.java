@@ -104,7 +104,7 @@ public class DropFragment extends Fragment {
 		    object.put("messageBody", item.getMessage());
 		    object.put("birth", (Calendar)item.getBirth());
 		    object.put("death", (Calendar)item.getDeath());
-		    object.put("hasImages", (byte[])item.getImage());
+		    object.put("image", (byte[])item.getImage());
 		    object.put("life", (Integer)item.getLife());
 		    object.put("categoryID", (Integer)item.getCategoryID());
 		  } catch (JSONException e) {
