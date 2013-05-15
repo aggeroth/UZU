@@ -134,7 +134,8 @@ public class ScanFragment extends Fragment {
 					uzuString = "";
 					for(int i = 0; i < uzuList.size(); i++){
 						Uzu temp = uzuList.get(i);
-						
+						System.out.println(temp.getBirth());
+						System.out.println(temp.getDeath());
 						System.out.println("ADDING ITEM");
 						db.addUZU(new Uzu(temp.getLongitude(), temp.getLatitude(), temp.getSubject(), temp.getMessage(), temp.getImage(), temp.getDeath()));
 						System.out.println("ITEM ADDED");

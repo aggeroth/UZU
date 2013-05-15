@@ -52,7 +52,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	    System.out.println("nem 8");
 	    System.out.println(uzu.getBirth().toString()+ "8888888888");
 	    System.out.println(uzu.getBirth());
-	    values.put("birth", uzu.getBirth().toString());
+	    values.put("birth", uzu.getBirth().toString()); 
 	    System.out.println("nem 9");
 	    values.put("life", uzu.getLife());
 	    System.out.println("nem 10");

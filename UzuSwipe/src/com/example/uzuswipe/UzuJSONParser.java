@@ -6,6 +6,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.json.JSONArray;
@@ -39,6 +40,16 @@ public class UzuJSONParser {
 		 Log.d("UZU", uzuJSONString);
 	}
 	
+	public static Date JsonDateToDate(String jsonDate)
+	{
+	    //  "/Date(1321867151710)/"
+	    int idx1 = jsonDate.indexOf("(");
+	    int idx2 = jsonDate.indexOf(")");
+	    String s = jsonDate.substring(idx1+1, idx2);
+	    long l = Long.valueOf(s);
+	    return new Date(l);
+	}
+	
 	public List<Uzu> parse(){
 		try { 
 	        //parsing the string into JSONArray
@@ -58,7 +69,17 @@ public class UzuJSONParser {
 	             String life = u.getString(TAG_LIFE);
 	             String death = u.getString(TAG_DEATH);
 	             String image = u.getString(TAG_IMAGE);
+	             //JsonDateToDate(birth);
+	            // String birth = u.getString(TAG_BIRTH).getAsJsonPrimitive().getAsString();	             
+	             //System.out.println(time);
+	             Calendar calendar = Calendar.getInstance();
 	             
+	             calendar.setTimeInMillis(Long.parseLong(birth));
+	             
+	             System.out.println(calendar.toString());
+	             
+	             System.out.println("birth:" + birth);
+	             System.out.println("death: " + death);
 		        	Calendar birthdate = Calendar.getInstance();
 		            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd HH:mm:ss");
 		            try {
