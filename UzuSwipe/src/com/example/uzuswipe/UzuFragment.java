@@ -1,7 +1,8 @@
 package com.example.uzuswipe;
 
 
-import java.sql.Timestamp;
+
+import java.util.Calendar;
 
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -20,104 +21,63 @@ public class UzuFragment extends Fragment {
 	static final String EXTRA_LIFE = "LIFE";
 	
 	private int uzuID;
-	private String uzuSubject;
-	private String uzuMessage;
-	private double uzuLatitude;
-	private double uzuLongitude;
-	private boolean hasImages;
-	private Timestamp birth;
-	private int life;
-	private Timestamp death;
+	private double longitude;
+	private double latitude;
+	private String subject;
+	private String message;
+	private byte[] image;
+	private Calendar birth;
+	private int life; 
+	private Calendar death;
 	private int categoryID;
+	
 	
 	public static final UzuFragment newInstance(){
 		UzuFragment f = new UzuFragment();
 		return f;
 	}
 	
-	public static final UzuFragment newInstance(float longitude, float latitude, String subject, String message, boolean hasImage, int life)
+	public static final UzuFragment newInstance(double longitude, double latitude, String subject, String message, byte[] image, int life, int death, int categoryID)
 	{
 		UzuFragment f = new UzuFragment();
 		Bundle bdl = new Bundle(6);
 		bdl.putString(EXTRA_SUBJECT, subject);
 		bdl.putString(EXTRA_MESSAGE, message);
-		bdl.putFloat(EXTRA_LATITUDE, latitude);
-		bdl.putFloat(EXTRA_LONGITUDE, longitude);
-		bdl.putBoolean(EXTRA_HAS_IMAGE, hasImage);
+		bdl.putDouble(EXTRA_LATITUDE, latitude);
+		bdl.putDouble(EXTRA_LONGITUDE, longitude);
 		bdl.putInt(EXTRA_LIFE, life);
 		f.setArguments(bdl);
 		return f;
 	}
 	
-	public static final UzuFragment newInstance(String subject, String message, float latitude, float longitude)
+	public static final UzuFragment newInstance(String subject, String message, double latitude, double longitude)
 	{
 	    UzuFragment f = new UzuFragment();
 	    Bundle bdl = new Bundle(4);
 	    bdl.putString(EXTRA_SUBJECT, subject);
 	    bdl.putString(EXTRA_MESSAGE, message);
-	    bdl.putFloat(EXTRA_LATITUDE, latitude);
-	    bdl.putFloat(EXTRA_LONGITUDE, longitude);
+	    bdl.putDouble(EXTRA_LATITUDE, latitude);
+	    bdl.putDouble(EXTRA_LONGITUDE, longitude);
 	    f.setArguments(bdl);
 	    return f;
 	}
 	
-	/*public static final UzuFragment newInstance(String subject, String content) 
-	{
-		UzuFragment f = new UzuFragment();
-	    Bundle bdl = new Bundle(2);
-	    bdl.putString(EXTRA_SUBJECT, subject);
-	    bdl.putString(EXTRA_MESSAGE, content);
-	    
-	    uzuSubject = subject;
-	    uzuMessage = content;
-	    f.setArguments(bdl);
-	    return f;
-	}*/
 	
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, 
         Bundle savedInstanceState) {
-		uzuSubject = getArguments().getString(EXTRA_SUBJECT);
-		uzuMessage = getArguments().getString(EXTRA_MESSAGE);
-		uzuLatitude = getArguments().getFloat(EXTRA_LATITUDE);
-		uzuLongitude = getArguments().getFloat(EXTRA_LONGITUDE);
+		subject = getArguments().getString(EXTRA_SUBJECT);
+		message = getArguments().getString(EXTRA_MESSAGE);
+		latitude = getArguments().getDouble(EXTRA_LATITUDE);
+		longitude = getArguments().getDouble(EXTRA_LONGITUDE);
 		View v = inflater.inflate(R.layout.activity_item, container, false);
 		TextView subjectTextView = (TextView)v.findViewById(R.id.textView2);
 		TextView contentTextView = (TextView)v.findViewById(R.id.textView3);
-		subjectTextView.setText(uzuSubject);
-		contentTextView.setText(uzuMessage);
+		subjectTextView.setText(subject);
+		contentTextView.setText(message);
 		
         return v;
     }
-
-	
-	public String getUzuSubject(){
-		return uzuSubject;
-	}
-	
-	public String getUzuMessage(){
-		return uzuMessage;
-	}
-	
-	public double getUzuLongitude() {
-		return uzuLongitude;
-	}
-
-	public void setUzuLongitude(double uzuLongitude) {
-		this.uzuLongitude = uzuLongitude;
-	}
-
-	public double getUzuLatitude() {
-		return uzuLatitude;
-	}
-
-	public void setUzuLatitude(double uzuLatitude) {
-		this.uzuLatitude = uzuLatitude;
-	}
-
-	public void setItemSubject(String uzuSubject) {
-		this.uzuSubject = uzuSubject;
-	}
 
 	public int getUzuID() {
 		return uzuID;
@@ -127,19 +87,51 @@ public class UzuFragment extends Fragment {
 		this.uzuID = uzuID;
 	}
 
-	public boolean isHasImages() {
-		return hasImages;
+	public double getLongitude() {
+		return longitude;
 	}
 
-	public void setHasImages(boolean hasImages) {
-		this.hasImages = hasImages;
+	public void setLongitude(double longitude) {
+		this.longitude = longitude;
 	}
 
-	public Timestamp getBirth() {
+	public double getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(double latitude) {
+		this.latitude = latitude;
+	}
+
+	public String getSubject() {
+		return subject;
+	}
+
+	public void setSubject(String subject) {
+		this.subject = subject;
+	}
+
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
+	public byte[] getImage() {
+		return image;
+	}
+
+	public void setImage(byte[] image) {
+		this.image = image;
+	}
+
+	public Calendar getBirth() {
 		return birth;
 	}
 
-	public void setBirth(Timestamp birth) {
+	public void setBirth(Calendar birth) {
 		this.birth = birth;
 	}
 
@@ -151,11 +143,11 @@ public class UzuFragment extends Fragment {
 		this.life = life;
 	}
 
-	public Timestamp getDeath() {
+	public Calendar getDeath() {
 		return death;
 	}
 
-	public void setDeath(Timestamp death) {
+	public void setDeath(Calendar death) {
 		this.death = death;
 	}
 
@@ -167,18 +159,29 @@ public class UzuFragment extends Fragment {
 		this.categoryID = categoryID;
 	}
 
-	public void setUzuMessage(String uzuMessage) {
-		this.uzuMessage = uzuMessage;
-	}
-	
-	public void setUzuSubject(String uzuSubject) {
-		this.uzuSubject = uzuSubject;
+	public static String getExtraSubject() {
+		return EXTRA_SUBJECT;
 	}
 
-	@Override
-	public String toString(){
-		return uzuSubject;
+	public static String getExtraMessage() {
+		return EXTRA_MESSAGE;
 	}
 
+	public static String getExtraLatitude() {
+		return EXTRA_LATITUDE;
+	}
 
+	public static String getExtraLongitude() {
+		return EXTRA_LONGITUDE;
+	}
+
+	public static String getExtraHasImage() {
+		return EXTRA_HAS_IMAGE;
+	}
+
+	public static String getExtraLife() {
+		return EXTRA_LIFE;
+	}
+
+		
 }
