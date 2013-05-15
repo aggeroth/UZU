@@ -135,7 +135,7 @@ public class ScanFragment extends Fragment {
 					for(int i = 0; i < uzuList.size(); i++){
 						Uzu temp = uzuList.get(i);
 						
-						if(db.getUzu(temp.getUzuID()) != null){
+						if(!db.doesUzuExist(temp.getUzuID())){
 							break;
 						}
 

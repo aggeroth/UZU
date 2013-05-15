@@ -67,54 +67,17 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	    System.out.println("nem 14");
 	}
 	
-	Uzu getUzu(int uzuID) {
-        System.out.println("getuzu 1");
+	boolean doesUzuExist(int uzuID) {
 		SQLiteDatabase db = this.getReadableDatabase();
-		System.out.println("getuzu 2");
         Cursor cursor = db.query("Uzu", new String[] { "uzuID",
                 "longitude", "latitude", "subjectHeading", "messageBody", "image", "birth" , "life" , "death", "categoryID" }, "uzuID" + "=?",
                 new String[] { String.valueOf(uzuID) }, null, null, null, null);
-        System.out.println("getuzu 3");
         if (cursor != null) {
-        	System.out.println("getuzu 4");
-            cursor.moveToFirst();
+            return true;
         }
         else{
-        	System.out.println("getuzu 5");
-        	return null;
+        	return false;
         }
-        System.out.println("getuzu 6");
-        Uzu uzu = new Uzu();
-        System.out.println("getuzu 7");
-    	uzu.setUzuID(Integer.parseInt(cursor.getString(0)));
-    	System.out.println("getuzu 8");
-    	uzu.setLongitude(Double.parseDouble(cursor.getString(1)));
-    	System.out.println("getuzu 9");
-    	uzu.setLatitude(Double.parseDouble(cursor.getString(2)));
-    	System.out.println("getuzu 10");
-    	uzu.setSubject(cursor.getString(3));
-    	System.out.println("getuzu 11");
-    	uzu.setMessage(cursor.getString(4));
-    	System.out.println("getuzu 12");
-    	uzu.setImage(cursor.getString(5).getBytes());
-    	System.out.println("getuzu 13");
-        Calendar birthdate = Calendar.getInstance();
-        System.out.println("getuzu 14");
-        birthdate.setTimeInMillis(Long.parseLong(cursor.getString(6)));
-        System.out.println("getuzu 15");
-    	uzu.setBirth(birthdate);
-    	System.out.println("getuzu 16");
-    	uzu.setLife(Integer.parseInt(cursor.getString(7)));
-    	System.out.println("getuzu 17");
-        Calendar deathdate = Calendar.getInstance();
-        System.out.println("getuzu 18");
-        birthdate.setTimeInMillis(Long.parseLong(cursor.getString(8)));
-        System.out.println("getuzu 19");
-    	uzu.setBirth(deathdate);
-    	System.out.println("getuzu 20");
-    	uzu.setCategoryID(Integer.parseInt(cursor.getString(9)));
-    	System.out.println("getuzu 21");
-        return uzu;
     }
 	
 	public Uzu[] getAllUzus() {
