@@ -87,28 +87,15 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	        	
 	        	uzu.setImage(cursor.getString(5).getBytes());
 	        	
-	        	Calendar birth = Calendar.getInstance();
-	            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd HH:mm:ss");
-	            try {
-					birth.setTime(sdf.parse(cursor.getString(6)));
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-					System.out.println("Convert to birth date failed");
-				}
-	        	uzu.setBirth(birth);
+	            Calendar birthdate = Calendar.getInstance();
+	            birthdate.setTimeInMillis(Long.parseLong(cursor.getString(6)));
+	        	uzu.setBirth(birthdate);
 	        	
 	        	uzu.setLife(Integer.parseInt(cursor.getString(7)));
 	        	
-	        	Calendar death = Calendar.getInstance();
-	            try {
-					death.setTime(sdf.parse(cursor.getString(8)));
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-					System.out.println("Convert to death date failed");
-				}
-	        	uzu.setDeath(death);
+	            Calendar deathdate = Calendar.getInstance();
+	            birthdate.setTimeInMillis(Long.parseLong(cursor.getString(8)));
+	        	uzu.setBirth(deathdate);
 	        	
 	        	uzu.setCategoryID(Integer.parseInt(cursor.getString(9)));
 	        	
