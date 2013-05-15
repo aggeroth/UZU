@@ -22,8 +22,8 @@ public class UzuFragment extends Fragment {
 	private int uzuID;
 	private String uzuSubject;
 	private String uzuMessage;
-	private float uzuLatitude;
-	private float uzuLongitude;
+	private double uzuLatitude;
+	private double uzuLongitude;
 	private boolean hasImages;
 	private Timestamp birth;
 	private int life;
@@ -99,19 +99,19 @@ public class UzuFragment extends Fragment {
 		return uzuMessage;
 	}
 	
-	public float getUzuLongitude() {
+	public double getUzuLongitude() {
 		return uzuLongitude;
 	}
 
-	public void setUzuLongitude(float uzuLongitude) {
+	public void setUzuLongitude(double uzuLongitude) {
 		this.uzuLongitude = uzuLongitude;
 	}
 
-	public float getUzuLatitude() {
+	public double getUzuLatitude() {
 		return uzuLatitude;
 	}
 
-	public void setUzuLatitude(float uzuLatitude) {
+	public void setUzuLatitude(double uzuLatitude) {
 		this.uzuLatitude = uzuLatitude;
 	}
 

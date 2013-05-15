@@ -22,7 +22,6 @@ public class CollectionFragment extends Fragment {
 	
 	ScanFragment scanFragment;
 	
-	List<Uzu> uzuFragments;
 	
 	static final UzuFragment[] items = {
 		UzuFragment.newInstance("Item 1", "This is Item 1", (float)49.23232, (float)123.8987868),
@@ -32,33 +31,31 @@ public class CollectionFragment extends Fragment {
 		UzuFragment.newInstance("Item 5", "This is Item 5", (float)49.23232, (float)123.8987868)
 	};
 	
-	UzuFragment item;
+	
 	
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
 		if(container == null){
 			return null;
 		}
-		try{
-			uzuFragments = scanFragment.getUzuList();
-			for(int i = 0; i < uzuFragments.size(); i++) {
-				System.out.println(uzuFragments.get(i).getSubject());
-				
-			}
-		} catch (Exception e) {
-			System.out.println("this is an error");
-		}
-		
-		
 		final Activity activity = getActivity();
+		DatabaseHandler db = new DatabaseHandler(activity);
+		System.out.println("going to get all uzus");
+		Uzu[] uzus = db.getAllUzus();
+		System.out.println("getting uzus good!");
+		for(int i = 0; i < uzus.length; i++) {
+			System.out.println(i);
+		}
+		System.out.println("end for loop");
+		
 		View view = (LinearLayout)inflater.inflate(R.layout.fragment_collection, container, false);
 		
 		ListView listView = (ListView)view.findViewById(R.id.itemCollection);
 		
 		
 		//Displaying Items using ArrayAdapter
-		ArrayAdapter<UzuFragment> itemAdapter = new ArrayAdapter<UzuFragment>(activity, 
-				R.layout.list_view, items );
-		//ArrayAdapter<Item> itemAdapter = new ArrayAdapter<Item>(this, android.R.layout.simple_list_item_1, MainActivity.items);
+		//ArrayAdapter<UzuFragment> itemAdapter = new ArrayAdapter<UzuFragment>(activity, 
+				//R.layout.list_view, uzus );
+		ArrayAdapter<UzuFragment> itemAdapter = new ArrayAdapter<UzuFragment>(activity, android.R.layout.simple_list_item_1, items);
 				
 		listView.setAdapter(itemAdapter);
 		

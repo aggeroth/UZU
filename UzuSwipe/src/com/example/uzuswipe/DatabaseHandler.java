@@ -81,45 +81,64 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 	
 	public Uzu[] getAllUzus() {
+		System.out.println("getalluzuz 1");
 		
 	    List<Uzu> uzuList = new ArrayList<Uzu>();
+	    System.out.println("getalluzuz 2");
 	    String selectQuery = "SELECT  * FROM Uzu";
-	 
+	    System.out.println("getalluzuz 3");
 	    SQLiteDatabase db = this.getWritableDatabase();
+	    System.out.println("getalluzuz 4");
 	    Cursor cursor = db.rawQuery(selectQuery, null);
-	 
+	    System.out.println("getalluzuz 5");
 	    // looping through all rows and adding to list
 	    if (cursor.moveToFirst()) {
 	        do {
+	        	System.out.println("getalluzuz 6");
 	        	Uzu uzu = new Uzu();
+	        	System.out.println("getalluzuz 7");
 	        	uzu.setUzuID(Integer.parseInt(cursor.getString(0)));
+	        	System.out.println("getalluzuz 8");
 	        	uzu.setLongitude(Double.parseDouble(cursor.getString(1)));
+	        	System.out.println("getalluzuz 9");
 	        	uzu.setLatitude(Double.parseDouble(cursor.getString(2)));
+	        	System.out.println("getalluzuz 10");
 	        	uzu.setSubject(cursor.getString(3));
+	        	System.out.println("getalluzuz 11");
 	        	uzu.setMessage(cursor.getString(4));
+	        	System.out.println("getalluzuz 12");
 	        	
 	        	uzu.setImage(cursor.getString(5).getBytes());
-	        	
+	        	System.out.println("getalluzuz 13");
 	            Calendar birthdate = Calendar.getInstance();
+	            System.out.println("getalluzuz 14");
+	            System.out.println(cursor.getString(6));
 	            birthdate.setTimeInMillis(Long.parseLong(cursor.getString(6)));
+	            System.out.println("getalluzuz 15");
 	        	uzu.setBirth(birthdate);
-	        	
+	        	System.out.println("getalluzuz 16");
 	        	uzu.setLife(Integer.parseInt(cursor.getString(7)));
+	        	System.out.println("getalluzuz 17");
 	        	
 	            Calendar deathdate = Calendar.getInstance();
+	            System.out.println("getalluzuz 18");
 	            birthdate.setTimeInMillis(Long.parseLong(cursor.getString(8)));
+	            System.out.println("getalluzuz 19");
 	        	uzu.setBirth(deathdate);
-	        	
+	        	System.out.println("getalluzuz 20");
 	        	uzu.setCategoryID(Integer.parseInt(cursor.getString(9)));
-	        	
+	        	System.out.println("getalluzuz 21");
 	            // Adding contact to list
 	            uzuList.add(uzu);
+	            System.out.println("getalluzuz 22");
 	        } while (cursor.moveToNext());
 	    }
 	 
-	    
+	    System.out.println("getalluzuz 23");
 	    Uzu[] uzuArray = new Uzu[uzuList.size()];
+	    System.out.println("getalluzuz 24");
 	    uzuList.toArray(uzuArray);
+	    System.out.println("getalluzuz 25");
 	    // return contact list
 	    return uzuArray;
 	}
