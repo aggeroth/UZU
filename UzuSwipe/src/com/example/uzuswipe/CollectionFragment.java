@@ -21,7 +21,7 @@ import android.widget.AdapterView.OnItemClickListener;
 public class CollectionFragment extends Fragment {
 	
 	ScanFragment scanFragment;
-	static ArrayList<UzuFragment> uzuFragments = new ArrayList<UzuFragment>();
+	static ArrayList<UzuFragment> uzuFrag = new ArrayList<UzuFragment>();
 	//static UzuFragment[] uzuFrag = new UzuFragment[200]; //generic number
 	
 	static final UzuFragment[] items = {
@@ -32,9 +32,12 @@ public class CollectionFragment extends Fragment {
 		UzuFragment.newInstance("Item 5", "This is Item 5", (float)49.23232, (float)123.8987868)
 	};
 	
-	
+	static public UzuFragment[] getUzuFragements(){
+		return uzuFrag.toArray(new UzuFragment[0]);
+	}
 	
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
+		ArrayList<UzuFragment> uzuFragments = new ArrayList<UzuFragment>();
 		if(container == null){
 			return null;
 		}
@@ -79,7 +82,7 @@ public class CollectionFragment extends Fragment {
 			startActivity(intent);
 		}
 		});
-		
+		uzuFrag = uzuFragments;
 		return view;
 	}
 

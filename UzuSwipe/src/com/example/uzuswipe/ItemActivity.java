@@ -23,7 +23,7 @@ public class ItemActivity extends FragmentActivity {
 		int prePosition = getIntent().getIntExtra("position", 0); //The Zero is just a random default number
 		
 		//Creates an array of fragments from CollectionFragment
-		UzuFragment[] fragments = CollectionFragment.uzuFragments.toArray(new UzuFragment[0]);
+		UzuFragment[] fragments = CollectionFragment.getUzuFragements();
         
         pageAdapter = new MyPageAdapter(getSupportFragmentManager(), fragments);
         
