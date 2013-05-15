@@ -2,6 +2,7 @@ package com.example.uzuswipe;
 
 
 
+import java.util.Arrays;
 import java.util.Calendar;
 
 import android.support.v4.app.Fragment;
@@ -183,5 +184,11 @@ public class UzuFragment extends Fragment {
 		return EXTRA_LIFE;
 	}
 
+	@Override
+	public String toString() {
+		return subject;
+	}
+
+	
 		
 }
