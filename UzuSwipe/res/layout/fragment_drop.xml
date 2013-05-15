@@ -24,6 +24,75 @@
         android:layout_weight="1"
         android:gravity="top"
         android:hint="@string/input_text_hint" />
+    
+    <TextView
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:text="@string/lifetime_message" />
+    
+    <LinearLayout
+        android:layout_width="fill_parent"
+    	android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+            
+        <LinearLayout
+	        android:layout_width="wrap_content"
+	    	android:layout_height="wrap_content"
+	        android:orientation="vertical" >
+	        
+            <TextView
+                android:layout_width="52dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/day" />
+	        
+	        <NumberPicker
+			    android:id="@+id/numberPickerDay"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:textSize="12sp" />
+	            
+		</LinearLayout>
+   
+   	    <LinearLayout
+	        android:layout_width="wrap_content"
+	    	android:layout_height="wrap_content"
+	        android:orientation="vertical" >
+	        
+	        <TextView
+	            android:layout_width="54dp"
+	            android:layout_height="wrap_content"
+	            android:gravity="center"
+	            android:text="@string/hour" />
+
+	        <NumberPicker
+	            android:id="@+id/numberPickerHour"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:textSize="12sp" />
+	            
+		</LinearLayout>
+	    
+	    <LinearLayout
+	        android:layout_width="wrap_content"
+	    	android:layout_height="wrap_content"
+	        android:orientation="vertical" >
+	        
+	        <TextView
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:gravity="center"
+	            android:text="@string/min" />
+	        
+	        <NumberPicker
+			    android:id="@+id/numberPickerMin"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:textSize="12sp" />
+	        	            
+		</LinearLayout>
+		
+	</LinearLayout>
    
    <LinearLayout
        android:orientation="horizontal"

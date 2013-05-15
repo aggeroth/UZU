@@ -29,7 +29,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.NumberPicker;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class DropFragment extends Fragment {
 	Activity activity;
@@ -40,6 +42,12 @@ public class DropFragment extends Fragment {
 	
 	EditText subjectField;
 	EditText textField;
+	
+	NumberPicker days, hours, mins;
+	int total;
+	public static final int DAY_END = 7;
+	public static final int HOUR_END= 23;
+	public static final int MIN_END = 59;
 	
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
 		if(container == null){
@@ -52,49 +60,76 @@ public class DropFragment extends Fragment {
 		subjectField = (EditText)view.findViewById(R.id.input_subject);
 		textField = (EditText)view.findViewById(R.id.input_text);
 		
+		days = (NumberPicker) view.findViewById(R.id.numberPickerDay);
+	    days.setMinValue(0);
+	    days.setMaxValue(7);
+	    days.setWrapSelectorWheel(false);
+	    days.setValue(DAY_END);
+	    
+	    hours = (NumberPicker) view.findViewById(R.id.numberPickerHour);
+	    hours.setMinValue(0);
+	    hours.setMaxValue(23);
+	    hours.setWrapSelectorWheel(false);
+	    hours.setValue(0);
+	    
+	    mins = (NumberPicker) view.findViewById(R.id.numberPickerMin);
+	    mins.setMinValue(0);
+	    mins.setMaxValue(59);
+	    mins.setWrapSelectorWheel(false);
+	    mins.setValue(0);
+		
 		//Set buttonDrop
 		buttonDrop = (Button) view.findViewById(R.id.button_drop);
 		buttonDrop.setOnClickListener(new View.OnClickListener() {
 					
 			@Override
 			public void onClick(View arg0) {				
-				String subject = subjectField.getText().toString();
-				String text = textField.getText().toString();
-				GPSTracker tracker = new GPSTracker(activity);
-				Log.d("UZU", "point 1");
-				subjectField.setText("");
-				textField.setText("");
-				Log.d("UZU", "point 2");
-				int life = 4;
 				
-				Uzu item = new Uzu();
-				System.out.println("this actulaly prints the item");
-				item.setSubject(subject);
-				System.out.println(subject);
-				item.setMessage(text);
-				System.out.println(text);
-				Location loc = tracker.getLocation();
-				System.out.println(loc);
-				item.setLatitude((float)loc.getLatitude());
-				item.setLongitude((float)loc.getLongitude());
-				item.setLife(life);
-				item.setImage(null);
-	
-				Log.d("UZU", "point 3");
-				JSONObject newItem = createJSON(item);
-				Log.d("UZU", "point 4: " + newItem.toString());
-				UzuDropService uzuDrop = new UzuDropService(url, newItem);
-				Log.d("UZU", "point 5");
-				subject = "";
-				text = "";
-				
-				String itemString = "Subject: " + item.getSubject() + 
-						"\n" + "Content: " + item.getMessage() + 
-						"\n" + "Latitude: " + item.getLatitude() + 
-						"\n" + "Longitude: " + item.getLongitude();
-				
-				Log.d("UZU", "point 6: " + itemString);
-				uzuDrop.execute();
+				total = (days.getValue() * 1440) + (hours.getValue() * 60) + mins.getValue();
+				if(total > 10080){
+	    			Toast.makeText(activity, "Your uzu cannot have a life time longer than 7 days.", Toast.LENGTH_SHORT).show();
+	    		} else if (total == 0){
+	    			Toast.makeText(activity, "You need to set a life time for your uzu.", Toast.LENGTH_SHORT).show();
+	    		} else {
+	    			String subject = subjectField.getText().toString();
+					String text = textField.getText().toString();
+					GPSTracker tracker = new GPSTracker(activity);
+					Log.d("UZU", "point 1");
+					subjectField.setText("");
+					textField.setText("");
+					Log.d("UZU", "point 2");
+					int life = total;
+					
+					Uzu item = new Uzu();
+					System.out.println("this actulaly prints the item");
+					item.setSubject(subject);
+					System.out.println(subject);
+					item.setMessage(text);
+					System.out.println(text);
+					Location loc = tracker.getLocation();
+					System.out.println(loc);
+					item.setLatitude((float)loc.getLatitude());
+					item.setLongitude((float)loc.getLongitude());
+					item.setLife(life);
+					item.setImage(null);
+		
+					Log.d("UZU", "point 3");
+					JSONObject newItem = createJSON(item);
+					Log.d("UZU", "point 4: " + newItem.toString());
+					UzuDropService uzuDrop = new UzuDropService(url, newItem);
+					Log.d("UZU", "point 5");
+					subject = "";
+					text = "";
+					
+					String itemString = "Subject: " + item.getSubject() + 
+							"\n" + "Content: " + item.getMessage() + 
+							"\n" + "Latitude: " + item.getLatitude() + 
+							"\n" + "Longitude: " + item.getLongitude() +
+							"\n" + "Lifetime: " + item.getLife();
+					
+					Log.d("UZU", "point 6: " + itemString);
+					uzuDrop.execute();
+	    		}				
 			}
 		});
 		return view;

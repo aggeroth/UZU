@@ -11,6 +11,10 @@
     <string name="input_text_hint">Item Content</string>
     <string name="button_draft">Draft</string>
     <string name="button_drop">Drop</string>
+    <string name="lifetime_message">Set Uzu Lifetime</string>
+    <string name="day">Days: </string>
+	<string name="hour">Hours: </string>
+	<string name="min">Minutes: </string>
     
     <string name="collection_message">Collection Page</string>
     
