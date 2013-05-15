@@ -28,4 +28,6 @@
     <string name="subject">Subject</string>
 	<string name="subject_line">subject title goes here</string>
 	<string name="content">content</string>
+	
+	<string name="delete">Delete</string>
 </resources>

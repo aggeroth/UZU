@@ -143,7 +143,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	    return uzuArray;
 	}
 	
-	public void deleteUzu(Uzu uzu) {
+	public void deleteUzu(UzuFragment uzu) {
 	    SQLiteDatabase db = this.getWritableDatabase();
 	    db.delete("Uzu", "uzuID" + " = ?",
 	            new String[] { String.valueOf(uzu.getUzuID()) });

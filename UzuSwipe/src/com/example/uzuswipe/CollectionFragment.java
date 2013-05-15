@@ -50,6 +50,7 @@ public class CollectionFragment extends Fragment {
 		for(int i = 0; i < uzus.length; i++) {
 			UzuFragment uz = UzuFragment.newInstance(uzus[i].getSubject(), uzus[i].getMessage(), uzus[i].getLatitude(), uzus[i].getLongitude());
 			uz.setSubject(uzus[i].getSubject());
+			uz.setUzuID(uzus[i].getUzuID());
 			
 			uzuFragments.add(uz);
 			//UzuFragment uzu = UzuFragment.newInstance(uzus[i].getSubject(), uzus[i].getMessage(), uzus[i].getLatitude(), uzus[i].getLongitude());
@@ -68,7 +69,7 @@ public class CollectionFragment extends Fragment {
 		//Displaying Items using ArrayAdapter
 		//ArrayAdapter<UzuFragment> itemAdapter = new ArrayAdapter<UzuFragment>(activity, 
 				//R.layout.list_view, uzus );
-		ArrayAdapter<UzuFragment> itemAdapter = new ArrayAdapter<UzuFragment>(activity, android.R.layout.simple_list_item_1, uzuFragments.toArray(new UzuFragment[0]));
+		ArrayAdapter<UzuFragment> itemAdapter = new ArrayAdapter<UzuFragment>(activity, android.R.layout.simple_list_item_multiple_choice, uzuFragments.toArray(new UzuFragment[0]));
 				
 		listView.setAdapter(itemAdapter);
 		
@@ -87,6 +88,14 @@ public class CollectionFragment extends Fragment {
 		});
 		uzuFrag = uzuFragments;
 		return view;
+	}
+
+	public static ArrayList<UzuFragment> getUzuFrag() {
+		return uzuFrag;
+	}
+
+	public static void setUzuFrag(ArrayList<UzuFragment> uzuFrag) {
+		CollectionFragment.uzuFrag = uzuFrag;
 	}
 
 
