@@ -21,7 +21,7 @@ private static final long serialVersionUID = 1L;
 	
 	public Uzu(){}
 	
-	public Uzu(int itemID, float longitude, float latitude, String subject, String message, byte[] image, Calendar birth, int life, Calendar death) {
+	public Uzu(int itemID, double longitude, double latitude, String subject, String message, byte[] image, Calendar birth, int life, Calendar death) {
 		this.uzuID = itemID;
 		this.longitude = longitude;
 		this.latitude = latitude;

@@ -2,7 +2,10 @@ package com.example.uzuswipe;
 
 import java.sql.Blob;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import org.json.JSONArray;
@@ -56,7 +59,26 @@ public class UzuJSONParser {
 	             String death = u.getString(TAG_DEATH);
 	             String image = u.getString(TAG_IMAGE);
 	             
-	             Uzu uzu = new Uzu(Float.parseFloat(longitude), Float.parseFloat(latitude), subject, message, image.getBytes(), Integer.parseInt(life));
+		        	Calendar birthdate = Calendar.getInstance();
+		            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd HH:mm:ss");
+		            try {
+						birthdate.setTime(sdf.parse(birth));
+					} catch (ParseException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+						System.out.println("Convert to birth date failed");
+					}
+		            
+		        	Calendar deathdate = Calendar.getInstance();
+		            try {
+						deathdate.setTime(sdf.parse(death));
+					} catch (ParseException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+						System.out.println("Convert to death date failed");
+					}
+	             
+	             Uzu uzu = new Uzu(Integer.parseInt(id), Double.parseDouble(longitude), Double.parseDouble(latitude), subject, message, image.getBytes(), birthdate, Integer.parseInt(life), deathdate);
 	             uzuList.add(uzu);
 	             Log.d("UZU", "loop 2 " + i);
 	        }
