@@ -48,7 +48,10 @@ public class CollectionFragment extends Fragment {
 		//UzuFragment[] uzuFrag = new UzuFragment[200]; //generic number
 		System.out.println("getting uzus good!");
 		for(int i = 0; i < uzus.length; i++) {
-			uzuFragments.add(UzuFragment.newInstance(uzus[i].getSubject(), uzus[i].getMessage(), uzus[i].getLatitude(), uzus[i].getLongitude()));
+			UzuFragment uz = UzuFragment.newInstance(uzus[i].getSubject(), uzus[i].getMessage(), uzus[i].getLatitude(), uzus[i].getLongitude());
+			uz.setSubject(uzus[i].getSubject());
+			
+			uzuFragments.add(uz);
 			//UzuFragment uzu = UzuFragment.newInstance(uzus[i].getSubject(), uzus[i].getMessage(), uzus[i].getLatitude(), uzus[i].getLongitude());
 			//how can i add the uzu into the array?
 			//uzuFrag[i] = uzu;
