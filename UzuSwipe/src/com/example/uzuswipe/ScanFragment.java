@@ -28,7 +28,14 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+/**
+ * 
+ * @author Merisha Shim, Minoru Nakano
+ * ScanFragment class
+ * The class contains methods to scan the surroundings for Uzu items.
+ */
 public class ScanFragment extends Fragment {
 	
 	TextView resultText;
@@ -38,21 +45,30 @@ public class ScanFragment extends Fragment {
 	GPSTracker tracker;
 	UzuScanService uzuScan;
 	List<Uzu> uzuList2;
+	Activity activity;
 	
 	static final String url = "http://www.aggeroth.com:8080/RestEasyServices/ocean/trawl/";
 	
+	/**
+	 * Initializes the Fragment view.
+	 */
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
 		if(container == null){
 			return null;
 		}
-		Activity activity = getActivity();
+		//associate activity with MainActivity.
+		activity = getActivity();
+		//associate view object with the Fragment view.
 		View view = (RelativeLayout)inflater.inflate(R.layout.fragment_scan, container, false);
 		
+		//Initializes the scan image button.
 		final ImageView iView = (ImageView)view.findViewById(R.id.imageButton1);
+		//initializes the animation.
 		final Animation an = AnimationUtils.loadAnimation(activity, R.anim.spin);
 		tracker = new GPSTracker(activity);
 		resultText = (TextView)view.findViewById(R.id.return_text);
 		
+		//Initializes the image button.
 		imgBtn = (ImageButton)view.findViewById(R.id.imageButton1);
 		imgBtn.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -70,13 +86,22 @@ public class ScanFragment extends Fragment {
 		return view;
 	}
 	
+	/**
+	 * The method generates URL to be used to access the server.
+	 * @param tracker GPSTracker object used to obtain current location of the mobile device.
+	 * @param url URL String used to access the server.
+	 * @return completeURL URL String with current latitude and longitude.
+	 */
 	public String getURL(GPSTracker tracker, String url){		
 		String completeURL = url;
 		// check if GPS enabled     
 	    if(tracker.canGetLocation()){
+	    	//Obtain the current location.
 	        Location loc = tracker.getLocation();
+	        //Obtain latitude and longitude.
 	        float longitude = (float)loc.getLongitude();
 	        float latitude = (float)loc.getLatitude();
+	        //Append the latitude and longitude on the existing URL String
 	        completeURL += latitude + "/" + longitude;	        
 	    }else{
 	        // can't get location, GPS or Network is not enabled, Ask user to enable GPS/network in settings
@@ -85,13 +110,32 @@ public class ScanFragment extends Fragment {
 	    return completeURL;
 	}
 	
+	/**
+	 * 
+	 * @author Minoru Nakano, Merisha Shim, Nemanja Savic
+	 * UzuScanService class
+	 * The class accesses server in background. It sends the URL with current location 
+	 * and requests Uzu items in close proximity.
+	 * It then stores the returned Uzu items into the database of the mobile device.
+	 */
 	private class UzuScanService extends AsyncTask<Void, Void, String>{	
 		String httpString;
 		
+		/**
+		 * Constructor for the class.
+		 * @param url URL String to access the server.
+		 */
 		public UzuScanService(String url){
 			httpString = url;
 		}
 		
+		/**
+		 * The method renders entity returned from the server into String.
+		 * @param entity HttpEntity returned from the server.
+		 * @return out String object rendered from entity.
+		 * @throws IllegalStateException Exception thrown by the method.
+		 * @throws IOException Exception thrown by the method.
+		 */
 		protected String getASCIIContentFromEntity(HttpEntity entity) throws IllegalStateException, IOException {
 			InputStream in = entity.getContent();
 			StringBuffer out = new StringBuffer();
@@ -106,6 +150,11 @@ public class ScanFragment extends Fragment {
 			return out.toString();
 		}
 		
+		/**
+		 * The method is executed in the background thred.
+		 * It requests Uzu items from the server.
+		 * @return stringJSON JSONObject rendered into String
+		 */
 		@Override
 		protected String doInBackground(Void... params) {
 			HttpClient httpClient = new DefaultHttpClient();
@@ -113,8 +162,11 @@ public class ScanFragment extends Fragment {
 			HttpGet httpGet = new HttpGet(httpString);
 			String stringJSON = null;			
 			try {
+				//Requests Uzu items.
 				HttpResponse response = httpClient.execute(httpGet, localContext);
+				//Obtains entity returned from the server.
 				HttpEntity entity = response.getEntity();
+				//Obtains String from the entity.
 				stringJSON = getASCIIContentFromEntity(entity);
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -122,6 +174,11 @@ public class ScanFragment extends Fragment {
 			return stringJSON;
 		}
 		
+		/**
+		 * The method is executed after doInBackground.
+		 * The method parses the returned JSON String into Uzu objects.
+		 * It then stores the UzuObjects into the local storage.
+		 */
 		protected void onPostExecute(String results) {
 			Log.d("UZU", "Result: " + results);
 			
@@ -143,27 +200,29 @@ public class ScanFragment extends Fragment {
 						
 						db.addUZU(new Uzu(temp.getUzuID(), temp.getLongitude(), temp.getLatitude(), temp.getSubject(), temp.getMessage(), temp.getImage(), pickedup, temp.getDeath()));
 						
-						
-						uzuString += "Uzu: " + i + "\n" +
-									"Subject: " + temp.getSubject() + "\n" +
-									"Message: " + temp.getMessage() + "\n" +
-									"Longitude: " + temp.getLongitude() + "\n" +
-									"Latitude: " + temp.getLatitude() + "\n\n";
 						Log.d("UZU", "Uzu: " + i + " " + uzuString);
 					}					
 				}catch(Exception e){
 					Log.e("JSON Exception", e.toString());
 				}			
 			}
-			resultText.setText(uzuString);
+			Toast.makeText(activity, uzuList.size() + " items found!", Toast.LENGTH_SHORT).show();
 			imgBtn.setClickable(true);
 		}
 	}
-
+	
+	/**
+	 * Gets usuList.
+	 * @return uzuList2 uzuList value to be returned.
+	 */
 	public List<Uzu> getUzuList() {
 		return uzuList2;
 	}
-
+	
+	/**
+	 * Sets uzuList with a new value.
+	 * @param uzuList new uzuList value.
+	 */
 	public void setUzuList(List<Uzu> uzuList) {
 		this.uzuList = uzuList;
 	}

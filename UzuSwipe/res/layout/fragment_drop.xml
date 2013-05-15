@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Drop Fragment Display
+Author: Minoru Nakano
+UI for creating an Uzu item to be dropped.-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-    
+    <!-- Title for the Drop Fragment -->
     <TextView
         android:id="@+id/result_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/drop_message" />
-    
+    <!-- Text Field for the subject line of the Uzu item to be dropped. -->
     <EditText
         android:id="@+id/input_subject"
         android:layout_height="wrap_content"
@@ -17,6 +20,7 @@
         android:lines="1"
         android:layout_width="fill_parent" />
     
+    <!-- Text Field for the message of the Uzu item to be dropped. -->
     <EditText
         android:id="@+id/input_text"
         android:layout_width="fill_parent"
@@ -29,12 +33,13 @@
 	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content"
 	        android:text="@string/lifetime_message" />
-    
+    <!-- The layout includes NumberPicker elements to set the item lifetime. -->
     <LinearLayout
         android:layout_width="fill_parent"
     	android:layout_height="wrap_content"
         android:orientation="horizontal" >
-            
+        
+        <!-- Lifetime in days. -->
         <LinearLayout
 	        android:layout_width="wrap_content"
 	    	android:layout_height="wrap_content"
@@ -53,7 +58,8 @@
 			    android:textSize="12sp" />
 	            
 		</LinearLayout>
-   
+   		
+        <!-- Lifetime in hours. -->
    	    <LinearLayout
 	        android:layout_width="wrap_content"
 	    	android:layout_height="wrap_content"
@@ -73,6 +79,7 @@
 	            
 		</LinearLayout>
 	    
+   	    <!-- Lifetime in minutes. -->
 	    <LinearLayout
 	        android:layout_width="wrap_content"
 	    	android:layout_height="wrap_content"
@@ -94,18 +101,20 @@
 		
 	</LinearLayout>
    
+   <!-- Buttons -->
    <LinearLayout
        android:orientation="horizontal"
        android:layout_height="wrap_content"
        android:layout_width="fill_parent">
-    
+    	
+       <!-- Draft button, functionality is not implemented for this project. -->
 	    <Button
 	        android:id="@+id/button_draft"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_weight="1"
 	        android:text="@string/button_draft" />
-	    
+	    <!-- Drop button, button for dropping the Uzu item. -->
 	    <Button
 	        android:id="@+id/button_drop"
 	        android:layout_width="wrap_content"

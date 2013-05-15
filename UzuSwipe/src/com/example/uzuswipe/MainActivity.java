@@ -9,8 +9,17 @@ import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.view.Menu;
 
+/**
+ * 
+ * @author Minoru Nakano
+ * MainActivity class
+ * The class initializes all the fragments used in the application.
+ */
 public class MainActivity extends Activity {
 	
+	/**
+	 * Creates Action Bar and Tabs with three Fragments.
+	 */
 	@SuppressLint("CutPasteId")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -47,22 +56,42 @@ public class MainActivity extends Activity {
 		actionBar.addTab(tab);
 	}
 	
+	/**
+	 * 
+	 * @author Minoru Nakano
+	 * TabListener class
+	 * The class configures each tab with a speciic Fragment.
+	 * @param <T> Fragment passed on to the TabListener
+	 */
 	private class TabListener<T extends Fragment> implements ActionBar.TabListener{
 		private Fragment myFragment;
 		private final Activity myActivity;
 		private final String myTag;
 		private final Class<T> myClass;
 		
+		/**
+		 * Constructor for the class
+		 * @param activity Activity associated with the listener (MainActivity in this case)
+		 * @param tag Label for the tab.
+		 * @param cls Fragment to be associated with the tab.
+		 */
 		public TabListener(Activity activity, String tag, Class<T> cls){
 			myActivity = activity;
 			myTag = tag;
 			myClass = cls;
 		}
 		
+		/**
+		 * No method content specified. Method not used.
+		 */
 		public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft){
 			//nothing
 		}
 		
+		/**
+		 * Defines actions when a tab is selected.
+		 * The method displays the Fragment associated with the selected tab.
+		 */
 		public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft){
 			if(myFragment == null){
 				myFragment = android.app.Fragment.instantiate(myActivity, myClass.getName());
@@ -72,13 +101,20 @@ public class MainActivity extends Activity {
 			}
 		}
 		
+		/**
+		 * Defines actions when a tab is unselected.
+		 * The method detach the associated Fragment from the FragmentTransaction.
+		 */
 		public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft){
 			if(myFragment != null){
 				ft.detach(myFragment);
 			}
 		}			
 	}
-
+	
+	/**
+	 * The method to inflate the options menu.
+	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
