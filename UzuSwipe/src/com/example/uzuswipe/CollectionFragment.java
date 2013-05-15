@@ -21,7 +21,8 @@ import android.widget.AdapterView.OnItemClickListener;
 public class CollectionFragment extends Fragment {
 	
 	ScanFragment scanFragment;
-	static UzuFragment[] uzuFrag = new UzuFragment[200]; //generic number
+	static ArrayList<UzuFragment> uzuFragments = new ArrayList<UzuFragment>();
+	//static UzuFragment[] uzuFrag = new UzuFragment[200]; //generic number
 	
 	static final UzuFragment[] items = {
 		UzuFragment.newInstance("Item 1", "This is Item 1", (float)49.23232, (float)123.8987868),
@@ -44,9 +45,10 @@ public class CollectionFragment extends Fragment {
 		//UzuFragment[] uzuFrag = new UzuFragment[200]; //generic number
 		System.out.println("getting uzus good!");
 		for(int i = 0; i < uzus.length; i++) {
-			UzuFragment uzu = UzuFragment.newInstance(uzus[i].getSubject(), uzus[i].getMessage(), uzus[i].getLatitude(), uzus[i].getLongitude());
+			uzuFragments.add(UzuFragment.newInstance(uzus[i].getSubject(), uzus[i].getMessage(), uzus[i].getLatitude(), uzus[i].getLongitude()));
+			//UzuFragment uzu = UzuFragment.newInstance(uzus[i].getSubject(), uzus[i].getMessage(), uzus[i].getLatitude(), uzus[i].getLongitude());
 			//how can i add the uzu into the array?
-			uzuFrag[i] = uzu;
+			//uzuFrag[i] = uzu;
 			System.out.println("added uzu item");
 			
 		}
@@ -60,7 +62,7 @@ public class CollectionFragment extends Fragment {
 		//Displaying Items using ArrayAdapter
 		//ArrayAdapter<UzuFragment> itemAdapter = new ArrayAdapter<UzuFragment>(activity, 
 				//R.layout.list_view, uzus );
-		ArrayAdapter<UzuFragment> itemAdapter = new ArrayAdapter<UzuFragment>(activity, android.R.layout.simple_list_item_1, uzuFrag);
+		ArrayAdapter<UzuFragment> itemAdapter = new ArrayAdapter<UzuFragment>(activity, android.R.layout.simple_list_item_1, uzuFragments.toArray(new UzuFragment[0]));
 				
 		listView.setAdapter(itemAdapter);
 		
