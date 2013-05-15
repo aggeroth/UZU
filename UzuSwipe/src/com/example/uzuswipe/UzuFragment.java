@@ -186,7 +186,7 @@ public class UzuFragment extends Fragment {
 
 	@Override
 	public String toString() {
-		return subject;
+		return "blah blah blah" + subject;
 	}
 
 	
