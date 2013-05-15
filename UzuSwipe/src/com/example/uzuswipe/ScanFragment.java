@@ -2,6 +2,7 @@ package com.example.uzuswipe;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Calendar;
 import java.util.List;
 
 import org.apache.http.HttpEntity;
@@ -137,7 +138,10 @@ public class ScanFragment extends Fragment {
 						System.out.println(temp.getBirth());
 						System.out.println(temp.getDeath());
 						System.out.println("ADDING ITEM");
-						db.addUZU(new Uzu(temp.getLongitude(), temp.getLatitude(), temp.getSubject(), temp.getMessage(), temp.getImage(), temp.getDeath()));
+						
+						Calendar pickedup = Calendar.getInstance();
+						
+						db.addUZU(new Uzu(temp.getLongitude(), temp.getLatitude(), temp.getSubject(), temp.getMessage(), temp.getImage(), pickedup, temp.getDeath()));
 						System.out.println("ITEM ADDED");
 						
 						
