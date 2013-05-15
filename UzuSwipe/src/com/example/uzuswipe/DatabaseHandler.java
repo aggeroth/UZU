@@ -22,7 +22,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
-		String CREATE_UZU_TABLE = "CREATE TABLE Uzu (uzuID INTEGER PRIMARY KEY, longitude REAL, latitude REAL, subjectHeading TEXT, messageBody TEXT, image BLOB, brith DATE, life INTEGER, death DATE, categoryID INTEGER";
+		String CREATE_UZU_TABLE = "CREATE TABLE Uzu (uzuID INTEGER PRIMARY KEY, longitude REAL, latitude REAL, subjectHeading TEXT, messageBody TEXT, image BLOB, brith DATE, life INTEGER, death DATE, categoryID INTEGER)";
 		db.execSQL(CREATE_UZU_TABLE);
 	}
 
@@ -33,22 +33,38 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	}
 
 	public void addUZU(Uzu uzu) {
+		System.out.println("nem 0");
 	    SQLiteDatabase db = this.getWritableDatabase();
-	 
+	    System.out.println("nem 1");
 	    ContentValues values = new ContentValues();
+	    System.out.println("nem 2");
 	    values.put("uzuID", uzu.getUzuID());
+	    System.out.println("nem 3");
 	    values.put("longitude", uzu.getLongitude());
+	    System.out.println("nem 4");
 	    values.put("latitude", uzu.getLatitude());
+	    System.out.println("nem 5");
 	    values.put("subjectHeading", uzu.getSubject());
+	    System.out.println("nem 6");
 	    values.put("messageBody", uzu.getMessage());
+	    System.out.println("nem 7");
 	    values.put("image", uzu.getImage().toString());
+	    System.out.println("nem 8");
+	    System.out.println(uzu.getBirth().toString()+ "8888888888");
+	    System.out.println(uzu.getBirth());
 	    values.put("birth", uzu.getBirth().toString());
+	    System.out.println("nem 9");
 	    values.put("life", uzu.getLife());
+	    System.out.println("nem 10");
 	    values.put("death", uzu.getDeath().toString());
+	    System.out.println("nem 11");
 	    values.put("categoryID", uzu.getCategoryID());
+	    System.out.println("nem 12");
 	 
 	    db.insert("Uzu", null, values);
+	    System.out.println("nem 13");
 	    db.close();
+	    System.out.println("nem 14");
 	}
 	
 	public Uzu[] getAllUzus() {
