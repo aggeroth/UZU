@@ -124,9 +124,8 @@ public class ScanFragment extends Fragment {
 		
 		protected void onPostExecute(String results) {
 			Log.d("UZU", "Result: " + results);
-			System.out.println("MAKING DATABSEHANDLER");
+			
 			DatabaseHandler db = new DatabaseHandler(getActivity());
-			System.out.println("DATABSEHANDLER MADE");
 			
 			if (results!=null) {
 				try{
@@ -135,14 +134,14 @@ public class ScanFragment extends Fragment {
 					uzuString = "";
 					for(int i = 0; i < uzuList.size(); i++){
 						Uzu temp = uzuList.get(i);
-						System.out.println(temp.getBirth());
-						System.out.println(temp.getDeath());
-						System.out.println("ADDING ITEM");
 						
+						if(db.getUzu(temp.getUzuID()) != null){
+							break;
+						}
+
 						Calendar pickedup = Calendar.getInstance();
 						
-						db.addUZU(new Uzu(temp.getLongitude(), temp.getLatitude(), temp.getSubject(), temp.getMessage(), temp.getImage(), pickedup, temp.getDeath()));
-						System.out.println("ITEM ADDED");
+						db.addUZU(new Uzu(temp.getUzuID(), temp.getLongitude(), temp.getLatitude(), temp.getSubject(), temp.getMessage(), temp.getImage(), pickedup, temp.getDeath()));
 						
 						
 						uzuString += "Uzu: " + i + "\n" +

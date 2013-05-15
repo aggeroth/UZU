@@ -22,7 +22,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
-		String CREATE_UZU_TABLE = "CREATE TABLE Uzu (uzuID INTEGER PRIMARY KEY, longitude REAL, latitude REAL, subjectHeading TEXT, messageBody TEXT, image BLOB, brith DATE, life INTEGER, death DATE, categoryID INTEGER)";
+		String CREATE_UZU_TABLE = "CREATE TABLE Uzu (uzuID INTEGER PRIMARY KEY, longitude REAL, latitude REAL, subjectHeading TEXT, messageBody TEXT, image BLOB, birth DATE, life INTEGER, death DATE, categoryID INTEGER)";
 		db.execSQL(CREATE_UZU_TABLE);
 	}
 
@@ -66,6 +66,42 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	    db.close();
 	    System.out.println("nem 14");
 	}
+	
+	Uzu getUzu(int uzuID) {
+        SQLiteDatabase db = this.getReadableDatabase();
+ 
+        Cursor cursor = db.query("Uzu", new String[] { "uzuID",
+                "longitude", "latitude", "subjectHeading", "messageBody", "image", "birth" , "life" , "death", "categoryID" }, "uzuID" + "=?",
+                new String[] { String.valueOf(uzuID) }, null, null, null, null);
+        if (cursor != null)
+            cursor.moveToFirst();
+        else{
+        	return null;
+        }
+ 
+        Uzu uzu = new Uzu();
+    	uzu.setUzuID(Integer.parseInt(cursor.getString(0)));
+    	uzu.setLongitude(Double.parseDouble(cursor.getString(1)));
+    	uzu.setLatitude(Double.parseDouble(cursor.getString(2)));
+    	uzu.setSubject(cursor.getString(3));
+    	uzu.setMessage(cursor.getString(4));
+    	
+    	uzu.setImage(cursor.getString(5).getBytes());
+    	
+        Calendar birthdate = Calendar.getInstance();
+        birthdate.setTimeInMillis(Long.parseLong(cursor.getString(6)));
+    	uzu.setBirth(birthdate);
+    	
+    	uzu.setLife(Integer.parseInt(cursor.getString(7)));
+    	
+        Calendar deathdate = Calendar.getInstance();
+        birthdate.setTimeInMillis(Long.parseLong(cursor.getString(8)));
+    	uzu.setBirth(deathdate);
+    	
+    	uzu.setCategoryID(Integer.parseInt(cursor.getString(9)));
+    	
+        return uzu;
+    }
 	
 	public Uzu[] getAllUzus() {
 		
