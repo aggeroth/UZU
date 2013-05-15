@@ -206,7 +206,8 @@ public class DropFragment extends Fragment {
 		protected void onPostExecute(String results) {
 			Log.d("UZU", "point 10: " + results);
 			if (results!=null) {
-				resultText.setText(results);
+				Toast.makeText(activity, results, Toast.LENGTH_SHORT).show();
+				//resultText.setText(results);
 			}	
 			buttonDrop.setClickable(true);
 		}
