@@ -112,8 +112,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	        	System.out.println("getalluzuz 13");
 	            Calendar birthdate = Calendar.getInstance();
 	            System.out.println("getalluzuz 14");
-	            System.out.println(cursor.getString(6));
-	            birthdate.setTimeInMillis(Long.parseLong(cursor.getString(6)));
+	            //System.out.println(cursor.getString(6));
+	            birthdate.setTimeInMillis(cursor.getLong(6));
 	            System.out.println("getalluzuz 15");
 	        	uzu.setBirth(birthdate);
 	        	System.out.println("getalluzuz 16");
@@ -122,7 +122,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	        	
 	            Calendar deathdate = Calendar.getInstance();
 	            System.out.println("getalluzuz 18");
-	            birthdate.setTimeInMillis(Long.parseLong(cursor.getString(8)));
+	            birthdate.setTimeInMillis(cursor.getLong(8));
 	            System.out.println("getalluzuz 19");
 	        	uzu.setBirth(deathdate);
 	        	System.out.println("getalluzuz 20");
