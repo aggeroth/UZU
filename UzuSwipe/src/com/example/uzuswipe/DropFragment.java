@@ -181,12 +181,15 @@ public class DropFragment extends Fragment {
 					item.setLatitude((float)loc.getLatitude());
 					item.setLongitude((float)loc.getLongitude());
 					item.setLife(life);
-					
-					if(uzuImage.getDrawable() != null){
+					Log.d("UZU", "point 2.5");
+					if(uzuImage.getVisibility() == View.VISIBLE){
 						// Get ViewImage's bitmap to convert to byte array.
+						Log.d("UZU", "point 2.55");
 						Bitmap uzuBitmap = ((BitmapDrawable)uzuImage.getDrawable()).getBitmap();
+						Log.d("UZU", "point 2.5555");
 						item.setImage(getImageByteArray(uzuBitmap));
 					} else {
+						Log.d("UZU", "point 2.5555555555");
 						item.setImage(null);
 					}
 		
@@ -231,7 +234,7 @@ public class DropFragment extends Fragment {
 		    object.put("birth", (Calendar)item.getBirth());
 		    object.put("death", (Calendar)item.getDeath());
 		    
-		    if(uzuImage.getDrawable() != null){
+		    if(uzuImage.getVisibility() == View.VISIBLE){
 			    //object.put("image", (String)item.getImage());
 			    // From http://stackoverflow.com/q/12998918/1243372
 			    object.put("image", Base64.encodeToString(item.getImage(), Base64.URL_SAFE));
@@ -327,7 +330,7 @@ public class DropFragment extends Fragment {
 				httpPost.setEntity(new ByteArrayEntity(uzuPost.toString().getBytes("UTF8")));
 				HttpResponse response = httpClient.execute(httpPost);
 				HttpEntity entity = response.getEntity();
-				//Obtains the reault of the execution.
+				//Obtains the result of the execution.
 				stringResult = getASCIIContentFromEntity(entity);
 				Log.d("UZU", "point 8");
 			} catch (Exception e) {
