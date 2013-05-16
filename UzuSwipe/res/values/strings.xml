@@ -9,6 +9,9 @@
     <string name="drop_message">Drop Page</string>
     <string name="input_subject_hint">Item Subject</string>
     <string name="input_text_hint">Item Content</string>
+    <string name="button_add_image">Insert Image</string>
+    <string name="button_remove_image">Remove Image</string>
+    <string name="description_image_to_upload">Inserted Image"</string>
     <string name="button_draft">Draft</string>
     <string name="button_drop">Drop</string>
     <string name="lifetime_message">Set Uzu Lifetime</string>
