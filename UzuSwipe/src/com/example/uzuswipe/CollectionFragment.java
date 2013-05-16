@@ -40,6 +40,7 @@ public class CollectionFragment extends Fragment {
 													 /*uzus[i].getDeath(),*/ uzus[i].getCategoryID());
 			uz.setSubject(uzus[i].getSubject());
 			uz.setUzuID(uzus[i].getUzuID());
+			uz.setImage(uzus[i].getImage());
 			uzuFragments.add(uz);
 		}
 
