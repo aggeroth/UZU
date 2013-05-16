@@ -126,16 +126,12 @@ public class DropFragment extends Fragment {
 					
 					//Construct an Uzu item.
 					Uzu item = new Uzu();
-					System.out.println("this actulaly prints the item");
 					//set Uzu subject.
 					item.setSubject(subject);
-					System.out.println(subject);
 					//set Uzu message.
 					item.setMessage(text);
-					System.out.println(text);
 					//Get current location of the mobile device.
 					Location loc = tracker.getLocation();
-					System.out.println(loc);
 					//Set latitude, longitude, lifetime and image.
 					item.setLatitude((float)loc.getLatitude());
 					item.setLongitude((float)loc.getLongitude());
