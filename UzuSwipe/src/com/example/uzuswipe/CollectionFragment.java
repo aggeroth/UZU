@@ -33,11 +33,11 @@ public class CollectionFragment extends Fragment {
 		final Activity activity = getActivity();
 		DatabaseHandler db = new DatabaseHandler(activity);
 		Uzu[] uzus = db.getAllUzus();
-
+//double longitude, double latitude, String subject, String message, byte[] image, int life, int death, int categoryID)
 		for (int i = 0; i < uzus.length; i++) {
-			UzuFragment uz = UzuFragment.newInstance(uzus[i].getSubject(),
-					uzus[i].getMessage(), uzus[i].getLatitude(),
-					uzus[i].getLongitude());
+			UzuFragment uz = UzuFragment.newInstance(uzus[i].getLongitude(), uzus[i].getLatitude(), uzus[i].getSubject(),
+													 uzus[i].getMessage(), uzus[i].getImage(), uzus[i].getLife(),
+													 /*uzus[i].getDeath(),*/ uzus[i].getCategoryID());
 			uz.setSubject(uzus[i].getSubject());
 			uz.setUzuID(uzus[i].getUzuID());
 			uzuFragments.add(uz);

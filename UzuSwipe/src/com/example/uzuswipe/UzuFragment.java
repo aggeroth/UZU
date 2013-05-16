@@ -2,14 +2,15 @@ package com.example.uzuswipe;
 
 
 
-import java.util.Arrays;
 import java.util.Calendar;
-
 import android.support.v4.app.Fragment;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class UzuFragment extends Fragment {
@@ -18,7 +19,7 @@ public class UzuFragment extends Fragment {
 	static final String EXTRA_MESSAGE = "EXTRA_MESSAGE";
 	static final String EXTRA_LATITUDE = "EXTRA_LATITUDE";
 	static final String EXTRA_LONGITUDE = "EXTRA_LONGITUDE";
-	static final String EXTRA_HAS_IMAGE = "EXTRA_HAS_IMAGE";
+	static final String EXTRA_IMAGE = "EXTRA_IMAGE";
 	static final String EXTRA_LIFE = "LIFE";
 	
 	private int uzuID;
@@ -38,7 +39,8 @@ public class UzuFragment extends Fragment {
 		return f;
 	}
 	
-	public static final UzuFragment newInstance(double longitude, double latitude, String subject, String message, byte[] image, int life, int death, int categoryID)
+	public static final UzuFragment newInstance(double longitude, double latitude, String subject,
+												String message, byte[] image, int life, int categoryID)
 	{
 		UzuFragment f = new UzuFragment();
 		Bundle bdl = new Bundle(6);
@@ -47,11 +49,12 @@ public class UzuFragment extends Fragment {
 		bdl.putDouble(EXTRA_LATITUDE, latitude);
 		bdl.putDouble(EXTRA_LONGITUDE, longitude);
 		bdl.putInt(EXTRA_LIFE, life);
+		bdl.putByteArray(EXTRA_IMAGE, image);
 		f.setArguments(bdl);
 		return f;
 	}
 	
-	public static final UzuFragment newInstance(String subject, String message, double latitude, double longitude)
+	/*public static final UzuFragment newInstance(String subject, String message, double latitude, double longitude)
 	{
 	    UzuFragment f = new UzuFragment();
 	    Bundle bdl = new Bundle(4);
@@ -61,7 +64,7 @@ public class UzuFragment extends Fragment {
 	    bdl.putDouble(EXTRA_LONGITUDE, longitude);
 	    f.setArguments(bdl);
 	    return f;
-	}
+	}*/
 	
 	
 	@Override
@@ -71,11 +74,23 @@ public class UzuFragment extends Fragment {
 		message = getArguments().getString(EXTRA_MESSAGE);
 		latitude = getArguments().getDouble(EXTRA_LATITUDE);
 		longitude = getArguments().getDouble(EXTRA_LONGITUDE);
+		image = getArguments().getByteArray(EXTRA_IMAGE);
 		View v = inflater.inflate(R.layout.activity_item, container, false);
 		TextView subjectTextView = (TextView)v.findViewById(R.id.textView2);
 		TextView contentTextView = (TextView)v.findViewById(R.id.textView3);
+		ImageView uzuImage = (ImageView)v.findViewById(R.id.uzuItemImage);
 		subjectTextView.setText(subject);
 		contentTextView.setText(message);
+		
+		Log.d("IMAGE STUFF", "Hello Martin");
+		if (image != null) {
+			
+			uzuImage.setImageBitmap(BitmapFactory.decodeByteArray(image , 0, image.length));
+		}
+		Log.d("IMAGE STUFF", "Hello Martin again");
+		
+		
+		
 		
         return v;
     }
@@ -177,7 +192,7 @@ public class UzuFragment extends Fragment {
 	}
 
 	public static String getExtraHasImage() {
-		return EXTRA_HAS_IMAGE;
+		return EXTRA_IMAGE;
 	}
 
 	public static String getExtraLife() {

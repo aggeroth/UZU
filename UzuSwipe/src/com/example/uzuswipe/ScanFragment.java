@@ -144,7 +144,8 @@ public class ScanFragment extends Fragment {
 									"Subject: " + temp.getSubject() + "\n" +
 									"Message: " + temp.getMessage() + "\n" +
 									"Longitude: " + temp.getLongitude() + "\n" +
-									"Latitude: " + temp.getLatitude() + "\n\n";
+									"Latitude: " + temp.getLatitude() + "\n" +
+									"Image: " + temp.getImage().toString() + "\n\n";
 						Log.d("UZU", "Uzu: " + i + " " + uzuString);
 					}					
 				}catch(Exception e){
