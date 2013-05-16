@@ -28,7 +28,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class ScanFragment extends Fragment {
 	
@@ -135,31 +134,22 @@ public class ScanFragment extends Fragment {
 					uzuString = "";
 					for(int i = 0; i < uzuList.size(); i++){
 						Uzu temp = uzuList.get(i);
-						System.out.println(temp.getUzuID() + "******************************");
-						if(db.doesUzuExist(temp.getUzuID())){
-							System.out.println("already exists, continuing....");
-							continue;
-						} else {
-							System.out.println("NEW NEW NEW NEW NEW NEW NEW NEW NEW NEW");
-						}
 
 						Calendar pickedup = Calendar.getInstance();
 						
 						db.addUZU(new Uzu(temp.getUzuID(), temp.getLongitude(), temp.getLatitude(), temp.getSubject(), temp.getMessage(), temp.getImage(), pickedup, temp.getDeath()));
 						
-//						uzuString += "Uzu: " + i + "\n" +
-//									"Subject: " + temp.getSubject() + "\n" +
-//									"Message: " + temp.getMessage() + "\n" +
-//									"Longitude: " + temp.getLongitude() + "\n" +
-//									"Latitude: " + temp.getLatitude() + "\n\n";
-//						Log.d("UZU", "Uzu: " + i + " " + uzuString);
+						
+						uzuString += "Uzu: " + i + "\n" +
+									"Subject: " + temp.getSubject() + "\n" +
+									"Message: " + temp.getMessage() + "\n" +
+									"Longitude: " + temp.getLongitude() + "\n" +
+									"Latitude: " + temp.getLatitude() + "\n\n";
+						Log.d("UZU", "Uzu: " + i + " " + uzuString);
 					}					
 				}catch(Exception e){
 					Log.e("JSON Exception", e.toString());
-				}	
-			}
-			else{
-				Toast.makeText(getActivity(), "No Uzus found.", Toast.LENGTH_SHORT).show();
+				}			
 			}
 			resultText.setText(uzuString);
 			imgBtn.setClickable(true);

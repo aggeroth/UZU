@@ -78,6 +78,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	    Cursor cursor = db.rawQuery(selectQuery, null);
 	    
         if (cursor != null) {
+        	System.out.println(cursor);
         	System.out.println("meow true");
             return true;
         }
