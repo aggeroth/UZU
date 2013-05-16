@@ -33,6 +33,7 @@ public class ItemActivity extends FragmentActivity {
 	/** This is a button for the buttonDelete. */
 	Button buttonDelete;
 
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		final Activity activity = (Activity) this;
@@ -42,7 +43,7 @@ public class ItemActivity extends FragmentActivity {
 		setContentView(R.layout.fragment_views);
 		// Grabs the position of the page from the previous page
 		final int currentPosition = getIntent().getIntExtra("position", 0);
-						
+		
 		// Creates an array of fragments from CollectionFragment
 		final UzuFragment[] fragments = CollectionFragment.getUzuFragements();
 
@@ -61,15 +62,17 @@ public class ItemActivity extends FragmentActivity {
 			
 				//deletes the fragment
 				db.deleteUzu(fragments[currentPosition]);
-				
+				//pager.setCurrentItem(currentPosition+1);
+				/*Intent intent = new Intent(activity, MainActivity.class);
+
+				startActivity(intent); */		
 				//goes back to the previous page 'CollectionFragment'
 				finish();
-				
 				
 			}
 			
 		});
-		
+			
 		
 	}
 

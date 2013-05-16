@@ -18,6 +18,7 @@ public class CollectionFragment extends Fragment {
 
 	ScanFragment scanFragment;
 	static ArrayList<UzuFragment> uzuFrag = new ArrayList<UzuFragment>();
+	ArrayAdapter<UzuFragment> itemAdapter;
 
 	static public UzuFragment[] getUzuFragements() {
 		return uzuFrag.toArray(new UzuFragment[0]);
@@ -52,13 +53,13 @@ public class CollectionFragment extends Fragment {
 				uzuFragments.toArray(new UzuFragment[0]));
 
 		listView.setAdapter(itemAdapter);
-
+		//itemAdapter.notifyDataSetChanged();
 		// Specifying what happens when one item is clicked.
 		listView.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-
+				
 				Intent intent = new Intent(activity, ItemActivity.class);
 
 				intent.putExtra("position", position);
