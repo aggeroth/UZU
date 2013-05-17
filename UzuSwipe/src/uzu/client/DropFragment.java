@@ -1,4 +1,4 @@
-package com.example.uzuswipe;
+package uzu.client;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -17,6 +17,8 @@ import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import com.example.uzuswipe.R;
 
 import android.location.Location;
 import android.net.Uri;
@@ -53,30 +55,29 @@ import android.widget.Toast;
  *  - send an Uzu item to the server
  */
 public class DropFragment extends Fragment {
-	Activity activity;
 	
-	Button buttonDrop;
-	TextView resultText;
-	Button buttonImageFunctionality;
-	ImageView uzuImage;
-	ImageView uzuImageParsed;
-	//String parsedImage;
-	byte[] parsedImage;
-	private final static int IMAGE_COMPRESSION_RATIO = 400;
+	private final static int IMAGE_COMPRESSION_RATIO = 640;
 	private static final String SERVER_URL = "http://aggeroth.com:8080/RestEasyServices/ocean/drop";
+	/** Maximum days for the item lifetime.*/
+	private static final int DAY_END = 7;
+	/** Maximum hours for the item lifetime.*/
+	private static final int HOUR_END= 23;
+	/** Maximum minutes for the item lifetime.*/
+	private static final int MIN_END = 59;
+	private static final int SEVEN_DAYS = 10080;
+	private static final int BYTE_SIZE = 4096;
 	
-	EditText subjectField;
-	EditText textField;
+	private Activity activity;
+	private Button buttonDrop;
+	private Button buttonImageFunctionality;
+	private ImageView uzuImage;
+	private EditText subjectField;
+	private EditText textField;
 	
 	//NumberPicker for the Uzu item lifetime.
-	NumberPicker days, hours, mins;
-	int total;
-	/** Maximum days for the item lifetime.*/
-	public static final int DAY_END = 7;
-	/** Maximum hours for the item lifetime.*/
-	public static final int HOUR_END= 23;
-	/** Maximum minutes for the item lifetime.*/
-	public static final int MIN_END = 59;
+	private NumberPicker days, hours, mins;
+	private int total;
+	
 	
 	/**
 	 * Creates the Fragment view.
@@ -90,11 +91,9 @@ public class DropFragment extends Fragment {
 		//Assosicate view to this Fragment.
 		View view = (LinearLayout)inflater.inflate(R.layout.fragment_drop, container, false);
 		
-		resultText = (TextView)view.findViewById(R.id.result_text);
 		subjectField = (EditText)view.findViewById(R.id.input_subject);
 		textField = (EditText)view.findViewById(R.id.input_text);
 		uzuImage = (ImageView)view.findViewById(R.id.image_uzu_drop);
-		uzuImageParsed = (ImageView)view.findViewById(R.id.image_uzu_drop_parsed);
 		
 		/**
 		 * Allows for the creation of a button that can be used to insert an image into the Uzu item.
@@ -119,10 +118,7 @@ public class DropFragment extends Fragment {
 					intent.setAction(Intent.ACTION_GET_CONTENT);
 					startActivityForResult(Intent.createChooser(intent, "Select Picture"),1);
 				} else {
-					uzuImage.setImageBitmap(null);
-					uzuImage.setVisibility(View.GONE);
-					// Set new label for button, basically switch from removing an image to adding an image.
-		            buttonImageFunctionality.setText(activity.getResources().getString(R.string.button_add_image));
+					clearUzuImageAndResetButton();
 				}
 			}
 		});
@@ -130,19 +126,19 @@ public class DropFragment extends Fragment {
 		//Initialize Days, Hours and Minutes NumberPicker
 		days = (NumberPicker) view.findViewById(R.id.numberPickerDay);
 	    days.setMinValue(0);
-	    days.setMaxValue(7);
+	    days.setMaxValue(DAY_END);
 	    days.setWrapSelectorWheel(false);
 	    days.setValue(DAY_END);
 	    
 	    hours = (NumberPicker) view.findViewById(R.id.numberPickerHour);
 	    hours.setMinValue(0);
-	    hours.setMaxValue(23);
+	    hours.setMaxValue(HOUR_END);
 	    hours.setWrapSelectorWheel(false);
 	    hours.setValue(0);
 	    
 	    mins = (NumberPicker) view.findViewById(R.id.numberPickerMin);
 	    mins.setMinValue(0);
-	    mins.setMaxValue(59);
+	    mins.setMaxValue(MIN_END);
 	    mins.setWrapSelectorWheel(false);
 	    mins.setValue(0);
 		
@@ -158,7 +154,7 @@ public class DropFragment extends Fragment {
 				//Calculate the submitted total lifetime in minutes.
 				total = (days.getValue() * 1440) + (hours.getValue() * 60) + mins.getValue();
 				//if the calculated lifetime is more than 7 days,
-				if(total > 10080){
+				if(total > SEVEN_DAYS){
 	    			Toast.makeText(activity, "Your uzu cannot have a life time longer than 7 days.", Toast.LENGTH_SHORT).show();
 	    		//if the calculated lifetime is 0,
 				} else if (total == 0){
@@ -168,10 +164,8 @@ public class DropFragment extends Fragment {
 	    			String subject = subjectField.getText().toString();
 					String text = textField.getText().toString();
 					GPSTracker tracker = new GPSTracker(activity);
-					Log.d("UZU", "point 1");
 					subjectField.setText("");
 					textField.setText("");
-					Log.d("UZU", "point 2");
 					int life = total;
 					
 					//Construct an Uzu item.
@@ -186,73 +180,26 @@ public class DropFragment extends Fragment {
 					item.setLatitude((float)loc.getLatitude());
 					item.setLongitude((float)loc.getLongitude());
 					item.setLife(life);
-					Log.d("UZU", "point 2.5");
 					if(uzuImage.getVisibility() == View.VISIBLE){
 						// Get ViewImage's bitmap to convert to byte array.
-						Log.d("UZU", "point 2.55");
 						Bitmap uzuBitmap = ((BitmapDrawable)uzuImage.getDrawable()).getBitmap();
 						
 						//this might be a necessary step to properly convert image bitmap to byte array.
 						ByteArrayOutputStream bao = new ByteArrayOutputStream();
 						uzuBitmap.compress(Bitmap.CompressFormat.JPEG, 100, bao);
-						//------------------------------------------------------------------------------
-
-						Log.d("UZU", "point 2.5555");
 						item.setImage(bao.toByteArray());
-						//item.setImage(getImageByteArray(uzuBitmap));
 					} else {
-						Log.d("UZU", "point 2.5555555555");
 						item.setImage(null);
 					}
-		
-					Log.d("UZU", "point 3");
+					
 					//Create JSONObject from the Uzu item.
 					JSONObject newItem = createJSON(item);
 					
+					clearUzuImageAndResetButton();
 					
-					
-					//displaying parsed image -------------------------------------------------------------------
-					try {
-						Log.d("UZU", "point 3.1");
-						//parsedImage = newItem.getString("image");
-						parsedImage = (byte[])newItem.get("image");
-						Log.d("UZU", "point 3.2");
-					}catch(Exception e){
-						e.printStackTrace();
-					}
-					Log.d("UZU", "point 3.3");
-					//Bitmap uzuBitmap = ((BitmapDrawable)uzuImage.getDrawable()).getBitmap();
-					//ByteArrayOutputStream bao = new ByteArrayOutputStream();
-					//uzuBitmap.compress(Bitmap.CompressFormat.JPEG, 95, bao);
-					//byte[] decodedString = bao.toByteArray();
-					//byte[] decodedString = item.getImage();
-				    //byte[] decodedString = parsedImage.getBytes();
-					Log.d("UZU", "point 3.4");
-					//Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-					Bitmap decodedByte = BitmapFactory.decodeByteArray(parsedImage, 0, parsedImage.length);
-					Log.d("UZU", "point 3.5");
-					uzuImageParsed.setImageBitmap(decodedByte);
-					Log.d("UZU", "point 3.6");
-		            //uzuImageParsed.setVisibility(View.VISIBLE);
-					//--------------------------------------------------------------------------------------------
-					
-					
-					
-					
-					Log.d("UZU", "point 4: " + newItem.toString());
 					//Construct the UzuDropService with URL and the new Uzu item.
-					UzuDropService uzuDrop = new UzuDropService(SERVER_URL, newItem);
-					Log.d("UZU", "point 5");
-					subject = "";
-					text = "";
+					UzuDropService uzuDrop = new UzuDropService(SERVER_URL, newItem);	
 					
-					String itemString = "Subject: " + item.getSubject() + 
-							"\n" + "Content: " + item.getMessage() + 
-							"\n" + "Latitude: " + item.getLatitude() + 
-							"\n" + "Longitude: " + item.getLongitude() +
-							"\n" + "Lifetime: " + item.getLife();
-					
-					Log.d("UZU", "point 6: " + itemString);
 					//Send the item to the server.
 					uzuDrop.execute();
 	    		}				
@@ -278,10 +225,7 @@ public class DropFragment extends Fragment {
 		    object.put("death", (Calendar)item.getDeath());
 		    
 		    if(uzuImage.getVisibility() == View.VISIBLE){
-			    //object.put("image", (String)item.getImage());
-			    // From http://stackoverflow.com/q/12998918/1243372
-			    //object.put("image", Base64.encodeToString(item.getImage(), Base64.URL_SAFE));
-		    	object.put("image", Base64.encode(item.getImage(), Base64.URL_SAFE));
+		    	//object.put("image", Base64.encode(item.getImage(), Base64.URL_SAFE));
 		    	object.put("image", item.getImage());
 		    } else {
 		    	object.put("image", null);
@@ -295,6 +239,14 @@ public class DropFragment extends Fragment {
 		  return object;
 	}
 	
+	/**
+	 * This method gets the URI for the image selected from the Android Gallery. Constructs a bitmap from URI.
+	 * Sets the bitmap to the ImageView, and makes the ImageView visible. Then sets the insert image button to
+	 * a remove image button (basically modifying the button text).
+	 * 
+	 * This method is automatically called after startActivityForResult() is completed.
+	 * This is an inherited method from the fragment.
+	 */
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 	    if (resultCode == android.app.Activity.RESULT_OK) {
 	        if (requestCode == 1) {
@@ -304,7 +256,7 @@ public class DropFragment extends Fragment {
 	            uzuImage.setImageBitmap(compressImage(image));
 	            uzuImage.setVisibility(View.VISIBLE);
 	            
-	            // Set new label for button, basically switch from adding an image to deleting an image.
+	            // Set button text to "remove image", basically switch from adding an image to deleting an image.
 	            buttonImageFunctionality.setText(activity.getResources().getString(R.string.button_remove_image));
 	        }
 	    }
@@ -318,9 +270,9 @@ public class DropFragment extends Fragment {
 	 */
 	private class UzuDropService extends AsyncTask<Void, Void, String>{
 		
-		String httpString;
-		JSONObject uzuPost;
-		int TIMEOUT_MILLISEC = 10000;  // = 10 seconds
+		private String httpString;
+		private JSONObject uzuPost;
+		private int TIMEOUT_MILLISEC = 10000;  // = 10 seconds
 		
 		/**
 		 * Constructor for the class.
@@ -340,14 +292,14 @@ public class DropFragment extends Fragment {
 		 * @throws IllegalStateException Exception thrown by the method.
 		 * @throws IOException Exception thrown by the method.
 		 */
-		protected String getASCIIContentFromEntity(HttpEntity entity) throws IllegalStateException, IOException {
+		private String getASCIIContentFromEntity(HttpEntity entity) throws IllegalStateException, IOException {
 			InputStream in = entity.getContent();
 			StringBuffer out = new StringBuffer();
 			int n = 1;
-			while (n>0) {
-				byte[] b = new byte[4096];
+			while (n > 0) {
+				byte[] b = new byte[BYTE_SIZE];
 				n =  in.read(b);
-				if (n>0) {
+				if (n > 0) {
 					out.append(new String(b, 0, n));
 				}
 			}			
@@ -368,8 +320,8 @@ public class DropFragment extends Fragment {
 			HttpClient httpClient = new DefaultHttpClient(httpParams);
 			HttpPost httpPost = new HttpPost(httpString);
 			httpPost.setHeader( "Content-Type", "application/json" );
-			String stringResult = null;			
-			Log.d("UZU", "point 7");
+			String stringResult = null;
+			
 			try {
 				//Sends the Uzu JSONObject to the server. 
 				httpPost.setEntity(new ByteArrayEntity(uzuPost.toString().getBytes("UTF8")));
@@ -377,11 +329,10 @@ public class DropFragment extends Fragment {
 				HttpEntity entity = response.getEntity();
 				//Obtains the result of the execution.
 				stringResult = getASCIIContentFromEntity(entity);
-				Log.d("UZU", "point 8");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			Log.d("UZU", "point 9");
+			
 			return stringResult;
 		}
 		
@@ -390,7 +341,6 @@ public class DropFragment extends Fragment {
 		 * The method displays whether the Uzu item has been sent to the server successfully or not.
 		 */
 		protected void onPostExecute(String results) {
-			Log.d("UZU", "point 10: " + results);
 			if (results!=null) {
 				Toast.makeText(activity, results, Toast.LENGTH_SHORT).show();
 			}	
@@ -399,16 +349,14 @@ public class DropFragment extends Fragment {
 	}
 	
 	/**
-	 * Convert bitmap image to a byte array.
-	 * @param image
-	 * @return image in byte array form
+	 * Clear Uzu item image, and reset the button.
 	 */
-	private byte[] getImageByteArray(Bitmap image) {
-		int imageBytes = image.getWidth() * image.getHeight() * 4;
-		ByteBuffer buffer = ByteBuffer.allocate(imageBytes);
-		image.copyPixelsToBuffer(buffer);
-		return buffer.array();
-	}	
+	private void clearUzuImageAndResetButton() {
+		uzuImage.setImageBitmap(null);
+		uzuImage.setVisibility(View.GONE);
+		// Reset the label on the button; basically making sure that the button converts back to an insert image button.
+        buttonImageFunctionality.setText(activity.getResources().getString(R.string.button_add_image));
+	}
 	
 	/**
 	 * Image compression at default width of IMAGE_COMPRESSION_RATIO

@@ -1,4 +1,6 @@
-package com.example.uzuswipe;
+package uzu.client;
+
+import com.example.uzuswipe.R;
 
 import android.app.Activity;
 import android.content.Intent;

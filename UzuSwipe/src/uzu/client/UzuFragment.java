@@ -1,8 +1,11 @@
-package com.example.uzuswipe;
+package uzu.client;
 
 
 
 import java.util.Calendar;
+
+import com.example.uzuswipe.R;
+
 import android.support.v4.app.Fragment;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;

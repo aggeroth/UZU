@@ -1,4 +1,4 @@
-package com.example.uzuswipe;
+package uzu.client;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -12,6 +12,8 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.protocol.HttpContext;
+
+import com.example.uzuswipe.R;
 
 import android.app.Activity;
 import android.location.Location;

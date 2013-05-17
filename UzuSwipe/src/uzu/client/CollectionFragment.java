@@ -1,6 +1,9 @@
-package com.example.uzuswipe;
+package uzu.client;
 
 import java.util.ArrayList;
+
+import com.example.uzuswipe.R;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.app.Fragment;

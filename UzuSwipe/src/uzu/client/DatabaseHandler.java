@@ -1,4 +1,4 @@
-package com.example.uzuswipe;
+package uzu.client;
 
 import java.util.ArrayList;
 import java.util.Calendar;
