@@ -62,12 +62,14 @@ public class UzuJSONParser {
 	public List<Uzu> parse(){
 		try { 
 	        //parsing the string into JSONArray
+			Log.d("JSON", "Point 1: " + uzuJSONString);
 			uzuArray = new JSONArray(uzuJSONString);
-			
+			Log.d("JSON", "Point 2");
 			// looping through All JSONObjects in the JSONArray.
 	         for(int i = 0; i < uzuArray.length(); i++){
-	        	 JSONObject u = uzuArray.getJSONObject(i);    
 	        	 Log.d("UZU", "loop 1 " + i);
+	        	 JSONObject u = uzuArray.getJSONObject(i);
+	        	 Log.d("UZU", "loop 2 " + i);
 	        	 // Storing each JSON item in variable
 	        	 String id = u.getString(TAG_UZUID);
 	        	 String longitude = u.getString(TAG_LONGITUDE);
@@ -84,12 +86,12 @@ public class UzuJSONParser {
 	             
 	             Calendar deathdate = Calendar.getInstance();
 	             deathdate.setTimeInMillis(Long.parseLong(death));
-	             
+	             Log.d("UZU", "loop 3 " + i);
 	             //Instantiating the new Uzu object.
 	             Uzu uzu = new Uzu(Integer.parseInt(id), Double.parseDouble(longitude), Double.parseDouble(latitude), subject, message, image.getBytes(), birthdate, Integer.parseInt(life), deathdate);
 	             //Adding the Uzu object into the list
 	             uzuList.add(uzu);
-	             Log.d("UZU", "loop 2 " + i);
+	             Log.d("UZU", "loop 4 " + i);
 	        }
 	     } catch (JSONException e) {
 	         e.printStackTrace();

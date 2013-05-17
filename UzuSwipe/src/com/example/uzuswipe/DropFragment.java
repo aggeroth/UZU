@@ -1,5 +1,6 @@
 package com.example.uzuswipe;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
@@ -58,6 +59,9 @@ public class DropFragment extends Fragment {
 	TextView resultText;
 	Button buttonImageFunctionality;
 	ImageView uzuImage;
+	ImageView uzuImageParsed;
+	//String parsedImage;
+	byte[] parsedImage;
 	private final static int IMAGE_COMPRESSION_RATIO = 400;
 	private static final String SERVER_URL = "http://aggeroth.com:8080/RestEasyServices/ocean/drop";
 	
@@ -90,6 +94,7 @@ public class DropFragment extends Fragment {
 		subjectField = (EditText)view.findViewById(R.id.input_subject);
 		textField = (EditText)view.findViewById(R.id.input_text);
 		uzuImage = (ImageView)view.findViewById(R.id.image_uzu_drop);
+		uzuImageParsed = (ImageView)view.findViewById(R.id.image_uzu_drop_parsed);
 		
 		/**
 		 * Allows for the creation of a button that can be used to insert an image into the Uzu item.
@@ -186,8 +191,15 @@ public class DropFragment extends Fragment {
 						// Get ViewImage's bitmap to convert to byte array.
 						Log.d("UZU", "point 2.55");
 						Bitmap uzuBitmap = ((BitmapDrawable)uzuImage.getDrawable()).getBitmap();
+						
+						//this might be a necessary step to properly convert image bitmap to byte array.
+						ByteArrayOutputStream bao = new ByteArrayOutputStream();
+						uzuBitmap.compress(Bitmap.CompressFormat.JPEG, 100, bao);
+						//------------------------------------------------------------------------------
+
 						Log.d("UZU", "point 2.5555");
-						item.setImage(getImageByteArray(uzuBitmap));
+						item.setImage(bao.toByteArray());
+						//item.setImage(getImageByteArray(uzuBitmap));
 					} else {
 						Log.d("UZU", "point 2.5555555555");
 						item.setImage(null);
@@ -196,6 +208,37 @@ public class DropFragment extends Fragment {
 					Log.d("UZU", "point 3");
 					//Create JSONObject from the Uzu item.
 					JSONObject newItem = createJSON(item);
+					
+					
+					
+					//displaying parsed image -------------------------------------------------------------------
+					try {
+						Log.d("UZU", "point 3.1");
+						//parsedImage = newItem.getString("image");
+						parsedImage = (byte[])newItem.get("image");
+						Log.d("UZU", "point 3.2");
+					}catch(Exception e){
+						e.printStackTrace();
+					}
+					Log.d("UZU", "point 3.3");
+					//Bitmap uzuBitmap = ((BitmapDrawable)uzuImage.getDrawable()).getBitmap();
+					//ByteArrayOutputStream bao = new ByteArrayOutputStream();
+					//uzuBitmap.compress(Bitmap.CompressFormat.JPEG, 95, bao);
+					//byte[] decodedString = bao.toByteArray();
+					//byte[] decodedString = item.getImage();
+				    //byte[] decodedString = parsedImage.getBytes();
+					Log.d("UZU", "point 3.4");
+					//Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+					Bitmap decodedByte = BitmapFactory.decodeByteArray(parsedImage, 0, parsedImage.length);
+					Log.d("UZU", "point 3.5");
+					uzuImageParsed.setImageBitmap(decodedByte);
+					Log.d("UZU", "point 3.6");
+		            //uzuImageParsed.setVisibility(View.VISIBLE);
+					//--------------------------------------------------------------------------------------------
+					
+					
+					
+					
 					Log.d("UZU", "point 4: " + newItem.toString());
 					//Construct the UzuDropService with URL and the new Uzu item.
 					UzuDropService uzuDrop = new UzuDropService(SERVER_URL, newItem);
@@ -237,7 +280,9 @@ public class DropFragment extends Fragment {
 		    if(uzuImage.getVisibility() == View.VISIBLE){
 			    //object.put("image", (String)item.getImage());
 			    // From http://stackoverflow.com/q/12998918/1243372
-			    object.put("image", Base64.encodeToString(item.getImage(), Base64.URL_SAFE));
+			    //object.put("image", Base64.encodeToString(item.getImage(), Base64.URL_SAFE));
+		    	object.put("image", Base64.encode(item.getImage(), Base64.URL_SAFE));
+		    	object.put("image", item.getImage());
 		    } else {
 		    	object.put("image", null);
 		    }

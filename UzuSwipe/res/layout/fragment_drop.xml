@@ -153,6 +153,11 @@ android:layout_height="wrap_content"
 	        android:text="@string/button_drop" />
 	    
 	</LinearLayout>
+	<ImageView
+	       	android:id="@+id/image_uzu_drop_parsed"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:contentDescription="@string/description_image_to_upload" />
 	</LinearLayout>
 	</ScrollView>
 	</LinearLayout>
