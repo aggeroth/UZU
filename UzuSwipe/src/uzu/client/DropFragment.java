@@ -3,8 +3,6 @@ package uzu.client;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.ByteBuffer;
-import java.util.Calendar;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -15,7 +13,6 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.example.uzuswipe.R;
@@ -33,8 +30,6 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
-import android.util.Base64;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,7 +38,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.NumberPicker;
-import android.widget.TextView;
 import android.widget.Toast;
 
 /**
@@ -193,7 +187,7 @@ public class DropFragment extends Fragment {
 					}
 					
 					//Create JSONObject from the Uzu item.
-					JSONObject newItem = createJSON(item);
+					JSONObject newItem = UzuJSONParser.createJSON(item);
 					
 					clearUzuImageAndResetButton();
 					
@@ -208,36 +202,7 @@ public class DropFragment extends Fragment {
 		return view;
 	}
 	
-	/**
-	 * The method converts an Uzu item into JSONOject.
-	 * @param item new Uzu item to be dropped.
-	 * @return object JSONObject to be sent to the server.
-	 */
-	public JSONObject createJSON(Uzu item) {
-		  JSONObject object = new JSONObject();
-		  try {
-		    object.put("uzuID", (Integer)item.getUzuID());
-		    object.put("longitude", (Double)item.getLongitude());
-		    object.put("latitude", (Double)item.getLatitude());
-		    object.put("subjectHeading", item.getSubject());
-		    object.put("messageBody", item.getMessage());
-		    object.put("birth", (Calendar)item.getBirth());
-		    object.put("death", (Calendar)item.getDeath());
-		    
-		    if(uzuImage.getVisibility() == View.VISIBLE){
-		    	//object.put("image", Base64.encode(item.getImage(), Base64.URL_SAFE));
-		    	object.put("image", item.getImage());
-		    } else {
-		    	object.put("image", null);
-		    }
-		    
-		    object.put("life", (Integer)item.getLife());
-		    object.put("categoryID", (Integer)item.getCategoryID());
-		  } catch (JSONException e) {
-		    e.printStackTrace();
-		  }
-		  return object;
-	}
+
 	
 	/**
 	 * This method gets the URI for the image selected from the Android Gallery. Constructs a bitmap from URI.

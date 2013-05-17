@@ -109,4 +109,35 @@ public class UzuJSONParser {
 	     }
 		 return uzuList;
 	}
+	
+	/**
+	 * The method converts an Uzu item into JSONOject.
+	 * @param item new Uzu item to be dropped.
+	 * @return object JSONObject to be sent to the server.
+	 */
+	static public JSONObject createJSON(Uzu item) {
+		  JSONObject object = new JSONObject();
+		  try {
+		    object.put("uzuID", (Integer)item.getUzuID());
+		    object.put("longitude", (Double)item.getLongitude());
+		    object.put("latitude", (Double)item.getLatitude());
+		    object.put("subjectHeading", item.getSubject());
+		    object.put("messageBody", item.getMessage());
+		    object.put("birth", (Calendar)item.getBirth());
+		    object.put("death", (Calendar)item.getDeath());
+		    
+		    //if(uzuImage.getVisibility() == View.VISIBLE){
+		    	//object.put("image", Base64.encode(item.getImage(), Base64.URL_SAFE));
+		    	object.put("image", item.getImage());
+		    //} else {
+		    //	object.put("image", null);
+		    //}
+		    
+		    object.put("life", (Integer)item.getLife());
+		    object.put("categoryID", (Integer)item.getCategoryID());
+		  } catch (JSONException e) {
+		    e.printStackTrace();
+		  }
+		  return object;
+	}
 }
