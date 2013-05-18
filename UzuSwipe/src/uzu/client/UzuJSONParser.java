@@ -90,7 +90,7 @@ public class UzuJSONParser {
 	             String birth = u.getString(TAG_BIRTH);
 	             String life = u.getString(TAG_LIFE);
 	             String death = u.getString(TAG_DEATH);
-	             String image = u.getString(TAG_IMAGE);
+	             byte[] image = u.getString(TAG_IMAGE).getBytes();
 	             
 	             Calendar birthdate = Calendar.getInstance();
 	             birthdate.setTimeInMillis(Long.parseLong(birth));
@@ -99,7 +99,7 @@ public class UzuJSONParser {
 	             deathdate.setTimeInMillis(Long.parseLong(death));
 	             Log.d("UZU", "loop 3 " + i);
 	             //Instantiating the new Uzu object.
-	             Uzu uzu = new Uzu(Integer.parseInt(id), Double.parseDouble(longitude), Double.parseDouble(latitude), subject, message, image.getBytes(), birthdate, Integer.parseInt(life), deathdate);
+	             Uzu uzu = new Uzu(Integer.parseInt(id), Double.parseDouble(longitude), Double.parseDouble(latitude), subject, message, image, birthdate, Integer.parseInt(life), deathdate);
 	             //Adding the Uzu object into the list
 	             uzuList.add(uzu);
 	             Log.d("UZU", "loop 4 " + i);

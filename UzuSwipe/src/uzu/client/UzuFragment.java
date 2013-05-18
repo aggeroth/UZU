@@ -85,12 +85,12 @@ public class UzuFragment extends Fragment {
 		subjectTextView.setText(subject);
 		contentTextView.setText(message);
 		
-		Log.d("IMAGE STUFF", "Hello Martin");
+		/*Log.d("IMAGE STUFF", "Hello Martin");
 		if (image != null) {	
 			uzuImage.setImageBitmap(BitmapFactory.decodeByteArray(image , 0, image.length));
 		}
 		Log.d("IMAGE STUFF", "Hello Martin again");
-		
+		*/
 		
 		
 		

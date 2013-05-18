@@ -38,7 +38,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/textView3"
-        android:layout_alignTop="@+id/textView3"
-         />
+        android:layout_below="@+id/textView3"
+        android:contentDescription="Inserted Image."
+        android:layout_marginTop="53dp"
+        android:src="@drawable/ic_launcher" />
 
 </RelativeLayout>
