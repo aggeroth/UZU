@@ -21,7 +21,7 @@ public class Uzu implements Serializable {
 	private double latitude;
 	private String subject;
 	private String message;
-	private byte[] image;
+	private String image;
 	private Calendar birth;
 	private int life; 
 	private Calendar death;
@@ -45,7 +45,7 @@ public class Uzu implements Serializable {
 	 * @param life life value
 	 * @param death death value
 	 */
-	public Uzu(int itemID, double longitude, double latitude, String subject, String message, byte[] image, Calendar birth, int life, Calendar death) {
+	public Uzu(int itemID, double longitude, double latitude, String subject, String message, String image, Calendar birth, int life, Calendar death) {
 		this.uzuID = itemID;
 		this.longitude = longitude;
 		this.latitude = latitude;
@@ -67,7 +67,7 @@ public class Uzu implements Serializable {
 	 * @param image image value
 	 * @param life life value
 	 */
-	public Uzu(double longitude, double latitude, String subject, String message, byte[] image, int life) {
+	public Uzu(double longitude, double latitude, String subject, String message, String image, int life) {
 		this.longitude = longitude;
 		this.latitude = latitude;
 		this.subject = subject;
@@ -87,7 +87,7 @@ public class Uzu implements Serializable {
 	 * @param birth birth value
 	 * @param death death value
 	 */
-	public Uzu(int uzuID, double longitude, double latitude, String subject, String message, byte[] image, Calendar birth, Calendar death) {
+	public Uzu(int uzuID, double longitude, double latitude, String subject, String message, String image, Calendar birth, Calendar death) {
 		this.uzuID = uzuID;
 		this.longitude = longitude;
 		this.latitude = latitude;
@@ -246,7 +246,7 @@ public class Uzu implements Serializable {
 	 * Gets image attribute
 	 * @return image image value
 	 */
-	public byte[] getImage() {
+	public String getImage() {
 		return image;
 	}
 	
@@ -254,7 +254,7 @@ public class Uzu implements Serializable {
 	 * Sets image attribute
 	 * @param image image new value
 	 */
-	public void setImage(byte[] image) {
+	public void setImage(String image) {
 		this.image = image;
 	}
 	

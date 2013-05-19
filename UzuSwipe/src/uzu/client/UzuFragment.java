@@ -9,7 +9,7 @@ import com.example.uzuswipe.R;
 import android.support.v4.app.Fragment;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.util.Log;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,7 +30,7 @@ public class UzuFragment extends Fragment {
 	private double latitude;
 	private String subject;
 	private String message;
-	private byte[] image;
+	private String image;
 	private Calendar birth;
 	private int life; 
 	private Calendar death;
@@ -43,7 +43,7 @@ public class UzuFragment extends Fragment {
 	}
 	
 	public static final UzuFragment newInstance(double longitude, double latitude, String subject,
-												String message, byte[] image, int life, int categoryID)
+												String message, String image, int life, int categoryID)
 	{
 		UzuFragment f = new UzuFragment();
 		Bundle bdl = new Bundle(6);
@@ -52,7 +52,7 @@ public class UzuFragment extends Fragment {
 		bdl.putDouble(EXTRA_LATITUDE, latitude);
 		bdl.putDouble(EXTRA_LONGITUDE, longitude);
 		bdl.putInt(EXTRA_LIFE, life);
-		bdl.putByteArray(EXTRA_IMAGE, image);
+		bdl.putString(EXTRA_IMAGE, image);
 		f.setArguments(bdl);
 		return f;
 	}
@@ -77,7 +77,7 @@ public class UzuFragment extends Fragment {
 		message = getArguments().getString(EXTRA_MESSAGE);
 		latitude = getArguments().getDouble(EXTRA_LATITUDE);
 		longitude = getArguments().getDouble(EXTRA_LONGITUDE);
-		image = getArguments().getByteArray(EXTRA_IMAGE);
+		image = getArguments().getString(EXTRA_IMAGE);
 		View v = inflater.inflate(R.layout.activity_item, container, false);
 		TextView subjectTextView = (TextView)v.findViewById(R.id.textView2);
 		TextView contentTextView = (TextView)v.findViewById(R.id.textView3);
@@ -85,12 +85,13 @@ public class UzuFragment extends Fragment {
 		subjectTextView.setText(subject);
 		contentTextView.setText(message);
 		
-		/*Log.d("IMAGE STUFF", "Hello Martin");
-		if (image != null) {	
-			uzuImage.setImageBitmap(BitmapFactory.decodeByteArray(image , 0, image.length));
+		if (image != null) {
+			
+			byte[] data = Base64.decode(image, Base64.DEFAULT);
+			uzuImage.setImageBitmap(BitmapFactory.decodeByteArray(data , 0, data.length));
+		} else {
+			uzuImage.setImageBitmap(null);
 		}
-		Log.d("IMAGE STUFF", "Hello Martin again");
-		*/
 		
 		
 		
@@ -137,11 +138,11 @@ public class UzuFragment extends Fragment {
 		this.message = message;
 	}
 
-	public byte[] getImage() {
+	public String getImage() {
 		return image;
 	}
 
-	public void setImage(byte[] image) {
+	public void setImage(String image) {
 		this.image = image;
 	}
 

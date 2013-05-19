@@ -31,7 +31,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	 */
 	@Override
 	public void onCreate(SQLiteDatabase db) {
-		String CREATE_UZU_TABLE = "CREATE TABLE Uzu (uzuID INTEGER PRIMARY KEY, longitude REAL, latitude REAL, subjectHeading TEXT, messageBody TEXT, image BLOB, birth DATE, life INTEGER, death DATE, categoryID INTEGER)";
+		String CREATE_UZU_TABLE = "CREATE TABLE Uzu (uzuID INTEGER PRIMARY KEY, longitude REAL, " +
+				"latitude REAL, subjectHeading TEXT, messageBody TEXT, image TEXT, birth DATE, " +
+				"life INTEGER, death DATE, categoryID INTEGER)";
 		db.execSQL(CREATE_UZU_TABLE);
 	}
 	/*
@@ -56,7 +58,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	    values.put("latitude", uzu.getLatitude());
 	    values.put("subjectHeading", uzu.getSubject());
 	    values.put("messageBody", uzu.getMessage());
-	    values.put("image", uzu.getImage().toString());
+	    values.put("image", uzu.getImage());
 	    values.put("birth", uzu.getBirth().toString()); 
 	    values.put("life", uzu.getLife());
 	    values.put("death", uzu.getDeath().toString());
@@ -127,7 +129,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	        	uzu.setLatitude(Double.parseDouble(cursor.getString(2)));
 	        	uzu.setSubject(cursor.getString(3));
 	        	uzu.setMessage(cursor.getString(4));
-	        	uzu.setImage(cursor.getString(5).getBytes());
+	        	uzu.setImage(cursor.getString(5));
 	        	
 	            Calendar birthdate = Calendar.getInstance();
 	            birthdate.setTimeInMillis(cursor.getLong(6));

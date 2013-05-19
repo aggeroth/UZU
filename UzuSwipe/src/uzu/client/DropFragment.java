@@ -182,7 +182,7 @@ public class DropFragment extends Fragment {
 						//this might be a necessary step to properly convert image bitmap to byte array.
 						ByteArrayOutputStream bao = new ByteArrayOutputStream();
 						uzuBitmap.compress(Bitmap.CompressFormat.JPEG, 100, bao);
-						item.setImage(bao.toByteArray());
+						item.setImage(Base64.encodeToString(bao.toByteArray(), Base64.DEFAULT));
 					} else {
 						item.setImage(null);
 					}

@@ -90,7 +90,7 @@ public class UzuJSONParser {
 	             String birth = u.getString(TAG_BIRTH);
 	             String life = u.getString(TAG_LIFE);
 	             String death = u.getString(TAG_DEATH);
-	             byte[] image = u.getString(TAG_IMAGE).getBytes();
+	             String image = u.getString(TAG_IMAGE);
 	             
 	             Calendar birthdate = Calendar.getInstance();
 	             birthdate.setTimeInMillis(Long.parseLong(birth));
@@ -126,12 +126,7 @@ public class UzuJSONParser {
 		    object.put("birth", (Calendar)item.getBirth());
 		    object.put("death", (Calendar)item.getDeath());
 		    
-		    //if(uzuImage.getVisibility() == View.VISIBLE){
-		    	//object.put("image", Base64.encode(item.getImage(), Base64.URL_SAFE));
-		    	object.put("image", item.getImage());
-		    //} else {
-		    //	object.put("image", null);
-		    //}
+		    object.put("image", item.getImage());
 		    
 		    object.put("life", (Integer)item.getLife());
 		    object.put("categoryID", (Integer)item.getCategoryID());
