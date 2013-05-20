@@ -16,10 +16,14 @@ import org.apache.http.protocol.HttpContext;
 import com.example.uzuswipe.R;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.content.DialogInterface;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -126,7 +130,7 @@ public class ScanFragment extends Fragment {
 		
 		protected void onPostExecute(String results) {
 			Log.d("UZU", "Result: " + results);
-			
+			Activity activity = getActivity();
 			DatabaseHandler db = new DatabaseHandler(getActivity());
 			
 			if (results!=null) {
@@ -142,19 +146,90 @@ public class ScanFragment extends Fragment {
 						db.addUZU(new Uzu(temp.getUzuID(), temp.getLongitude(), temp.getLatitude(), temp.getSubject(), temp.getMessage(), temp.getImage(), pickedup, temp.getDeath()));
 						
 						
-						uzuString += "Uzu: " + i + "\n" +
+						/**uzuString += "Uzu: " + i + "\n" +
 									"Subject: " + temp.getSubject() + "\n" +
 									"Message: " + temp.getMessage() + "\n" +
 									"Longitude: " + temp.getLongitude() + "\n" +
 									"Latitude: " + temp.getLatitude() + "\n" +
 									"Image: " + temp.getImage() + "\n\n";
 						Log.d("UZU", "Uzu: " + i + " " + uzuString);
+						*/
 					}					
 				}catch(Exception e){
 					Log.e("JSON Exception", e.toString());
 				}			
 			}
-			resultText.setText(uzuString);
+			//resultText.setText(uzuString);
+			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+					activity);
+			if (uzuList.size() != 0) {
+				
+
+				// set title
+				alertDialogBuilder.setTitle("Uzus Found!");
+
+				// set dialog message
+				alertDialogBuilder
+						.setMessage(
+								uzuList.size()
+										+ " new uzus found! Would you like to go to your Collection?")
+						.setCancelable(false)
+						.setPositiveButton("Yes",
+								new DialogInterface.OnClickListener() {
+									public void onClick(DialogInterface dialog,
+											int id) {
+										// if this button is clicked, close
+										// current activity
+										CollectionFragment fragment = new CollectionFragment();
+										FragmentManager fragmentManager = getFragmentManager();
+										FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+										fragmentTransaction.replace(android.R.id.content, fragment);
+										fragmentTransaction.commit();
+									}
+								})
+						.setNegativeButton("No",
+								new DialogInterface.OnClickListener() {
+									public void onClick(DialogInterface dialog,
+											int id) {
+										// if this button is clicked, just close
+										// the dialog box and do nothing
+										dialog.cancel();
+									}
+								});
+
+				// create alert dialog
+				AlertDialog alertDialog = alertDialogBuilder.create();
+
+				// show it
+				alertDialog.show();
+			}
+			else {
+				alertDialogBuilder.setTitle("No Uzuz found!");
+				// set dialog message
+				alertDialogBuilder
+						.setMessage(
+								"Sorry, no Uzus found...")
+						.setCancelable(false)
+						
+						.setNegativeButton("OK",
+								new DialogInterface.OnClickListener() {
+									public void onClick(DialogInterface dialog,
+											int id) {
+										// if this button is clicked, just close
+										// the dialog box and do nothing
+										dialog.cancel();
+									}
+								});
+
+				// create alert dialog
+				AlertDialog alertDialog = alertDialogBuilder.create();
+
+				// show it
+				alertDialog.show();
+			
+			}
+
+			
 			imgBtn.setClickable(true);
 		}
 	}
