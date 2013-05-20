@@ -150,6 +150,39 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	    return uzuArray;
 	}
 	
+	public int getDatabaseSize() {
+	    List<Uzu> uzuList = new ArrayList<Uzu>();
+	    String selectQuery = "SELECT  * FROM Uzu";
+	    SQLiteDatabase db = this.getWritableDatabase();
+	    Cursor cursor = db.rawQuery(selectQuery, null);
+	    
+	    if (cursor.moveToFirst()) {
+	        do {
+	        	Uzu uzu = new Uzu();
+	        	uzu.setUzuID(Integer.parseInt(cursor.getString(0)));
+	        	uzu.setLongitude(Double.parseDouble(cursor.getString(1)));
+	        	uzu.setLatitude(Double.parseDouble(cursor.getString(2)));
+	        	uzu.setSubject(cursor.getString(3));
+	        	uzu.setMessage(cursor.getString(4));
+	        	uzu.setImage(cursor.getString(5));
+	        	
+	            Calendar birthdate = Calendar.getInstance();
+	            birthdate.setTimeInMillis(cursor.getLong(6));
+	        	uzu.setBirth(birthdate);
+	        	
+	            Calendar deathdate = Calendar.getInstance();
+	            birthdate.setTimeInMillis(cursor.getLong(8));
+	        	uzu.setBirth(deathdate);
+	        	
+	        	uzu.setCategoryID(Integer.parseInt(cursor.getString(9)));
+	        	
+	            uzuList.add(uzu);
+	        } while (cursor.moveToNext());
+	    }
+
+	    return uzuList.size();
+	}
+	
 	/**
 	 * This method is responsible for deleting an Uzu item in the SQLite database by passing in it's Uzu Fragment
 	 * 
