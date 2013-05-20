@@ -117,7 +117,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	 */
 	public Uzu[] getAllUzus() {
 	    List<Uzu> uzuList = new ArrayList<Uzu>();
-	    String selectQuery = "SELECT  * FROM Uzu";
+	    String selectQuery = "SELECT  * FROM Uzu ORDER BY birth DESC" ;
 	    SQLiteDatabase db = this.getWritableDatabase();
 	    Cursor cursor = db.rawQuery(selectQuery, null);
 	    

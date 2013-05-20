@@ -158,7 +158,7 @@ public class ScanFragment extends Fragment {
 						*/
 					}	
 					int newSize = db.getDatabaseSize();
-					scanSize = newSize = currentSize;
+					scanSize = newSize - currentSize;
 				}catch(Exception e){
 					Log.e("JSON Exception", e.toString());
 				}			
