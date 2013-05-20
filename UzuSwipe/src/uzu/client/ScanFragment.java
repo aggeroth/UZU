@@ -44,6 +44,7 @@ public class ScanFragment extends Fragment {
 	GPSTracker tracker;
 	UzuScanService uzuScan;
 	List<Uzu> uzuList2;
+	int scanSize;
 	
 	static final String url = "http://www.aggeroth.com:8080/RestEasyServices/ocean/trawl/";
 	
@@ -135,6 +136,7 @@ public class ScanFragment extends Fragment {
 			
 			if (results!=null) {
 				try{
+					int currentSize = db.getDatabaseSize();
 					UzuJSONParser parser = new UzuJSONParser(results);
 					uzuList = parser.parse();
 					uzuString = "";
@@ -154,7 +156,9 @@ public class ScanFragment extends Fragment {
 									"Image: " + temp.getImage() + "\n\n";
 						Log.d("UZU", "Uzu: " + i + " " + uzuString);
 						*/
-					}					
+					}	
+					int newSize = db.getDatabaseSize();
+					scanSize = newSize = currentSize;
 				}catch(Exception e){
 					Log.e("JSON Exception", e.toString());
 				}			
@@ -162,7 +166,9 @@ public class ScanFragment extends Fragment {
 			//resultText.setText(uzuString);
 			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
 					activity);
-			if (uzuList.size() != 0) {
+			
+			
+			if (scanSize != 0) {
 				
 
 				// set title
@@ -171,7 +177,7 @@ public class ScanFragment extends Fragment {
 				// set dialog message
 				alertDialogBuilder
 						.setMessage(
-								uzuList.size()
+								scanSize
 										+ " new uzus found! Would you like to go to your Collection?")
 						.setCancelable(false)
 						.setPositiveButton("Yes",
