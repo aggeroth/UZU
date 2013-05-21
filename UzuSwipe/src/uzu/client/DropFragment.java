@@ -151,16 +151,22 @@ public class DropFragment extends Fragment {
 			public void onClick(View arg0) {				
 				//Calculate the submitted total lifetime in minutes.
 				total = (days.getValue() * 1440) + (hours.getValue() * 60) + mins.getValue();
+				
+				String subject = subjectField.getText().toString().trim();
+				String text = textField.getText().toString().trim();
+				if (subject == null || subject.isEmpty()) {
+					Toast.makeText(activity, "Your Uzu cannot have an empty " + activity.getResources().getString(R.string.input_subject_hint) + " field.", Toast.LENGTH_SHORT).show();
+				} else if (text == null || text.isEmpty()) {
+					Toast.makeText(activity, "Your Uzu cannot have an empty " + activity.getResources().getString(R.string.input_text_hint) + " field.", Toast.LENGTH_SHORT).show();
 				//if the calculated lifetime is more than 7 days,
-				if(total > SEVEN_DAYS){
-	    			Toast.makeText(activity, "Your uzu cannot have a life time longer than 7 days.", Toast.LENGTH_SHORT).show();
+				} else if(total > SEVEN_DAYS){
+	    			Toast.makeText(activity, "Your Uzu cannot have a life time longer than 7 days.", Toast.LENGTH_SHORT).show();
 	    		//if the calculated lifetime is 0,
 				} else if (total == 0){
-	    			Toast.makeText(activity, "You need to set a life time for your uzu.", Toast.LENGTH_SHORT).show();
+	    			Toast.makeText(activity, "You need to set a life time for your Uzu.", Toast.LENGTH_SHORT).show();
 	    		//if everything is ok, construct an Uzu item with input data.
 				} else {
-	    			String subject = subjectField.getText().toString();
-					String text = textField.getText().toString();
+	    			
 					GPSTracker tracker = new GPSTracker(activity);
 					int life = total;
 					

@@ -19,8 +19,7 @@ android:scrollbars="none">
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-android:layout_height="wrap_content"
-        >
+		android:layout_height="wrap_content" >
     
     <!-- Title for the Drop Fragment -->
     <!-- Text Field for the subject line of the Uzu item to be dropped. -->
@@ -39,11 +38,6 @@ android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="top"
         android:hint="@string/input_text_hint" />
-    
-    <TextView
-	        android:layout_width="match_parent"
-	        android:layout_height="wrap_content"
-	        android:text="@string/lifetime_message" />
     <Button
 	        android:id="@+id/button_add_image"
 	        android:layout_width="wrap_content"
@@ -59,6 +53,12 @@ android:layout_height="wrap_content"
 	        android:contentDescription="@string/description_image_to_upload" />
     
     <!-- The layout includes NumberPicker elements to set the item lifetime. -->
+
+	<TextView
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:text="@string/lifetime_message" />
+
     <LinearLayout
         android:layout_width="fill_parent"
     	android:layout_height="wrap_content"
@@ -133,12 +133,6 @@ android:layout_height="wrap_content"
        android:layout_width="fill_parent">
     	
        <!-- Draft button, functionality is not implemented for this project. -->
-	    <Button
-	        android:id="@+id/button_draft"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_weight="1"
-	        android:text="@string/button_draft" />
 	    <!-- Drop button, button for dropping the Uzu item. -->
 	    <Button
 	        android:id="@+id/button_drop"
