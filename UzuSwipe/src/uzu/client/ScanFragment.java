@@ -47,8 +47,6 @@ import android.widget.TextView;
  */
 public class ScanFragment extends Fragment {
 
-	/** The textview that show the result of the uzu object. */
-	TextView resultText;
 	/** The image button of the scan. */
 	ImageButton imgBtn;
 	/** The list of uzu objects. */
@@ -81,8 +79,7 @@ public class ScanFragment extends Fragment {
 		final Animation an = AnimationUtils
 				.loadAnimation(activity, R.anim.spin);
 		tracker = new GPSTracker(activity);
-		resultText = (TextView) view.findViewById(R.id.return_text);
-
+		
 		imgBtn = (ImageButton) view.findViewById(R.id.imageButton1);
 		imgBtn.setOnClickListener(new View.OnClickListener() {
 			@Override
