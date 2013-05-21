@@ -81,5 +81,4 @@ public class CollectionFragment extends Fragment {
 	public static void setUzuFrag(ArrayList<UzuFragment> uzuFrag) {
 		CollectionFragment.uzuFrag = uzuFrag;
 	}
-
 }

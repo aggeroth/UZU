@@ -9,9 +9,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 /**
  * This class grabs the CollectionFragment class list and individually puts them 
@@ -35,6 +37,7 @@ public class ItemActivity extends FragmentActivity {
 	/** This is a button for the buttonDelete. */
 	Button buttonDelete;
 
+	int poss;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +47,7 @@ public class ItemActivity extends FragmentActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.fragment_views);
 		// Grabs the position of the page from the previous page
-		final int currentPosition = getIntent().getIntExtra("position", 0);
+		poss = getIntent().getIntExtra("position", 0);
 		
 		// Creates an array of fragments from CollectionFragment
 		final UzuFragment[] fragments = CollectionFragment.getUzuFragements();
@@ -53,7 +56,7 @@ public class ItemActivity extends FragmentActivity {
 
 		final ViewPager pager = (ViewPager) findViewById(R.id.viewpager);
 		pager.setAdapter(pageAdapter);
-		pager.setCurrentItem(currentPosition);
+		pager.setCurrentItem(poss);
 				
 		// Set buttonDrop
 		buttonDelete = (Button) findViewById(R.id.button1);
@@ -63,13 +66,15 @@ public class ItemActivity extends FragmentActivity {
 			public void onClick(View arg0) {
 			
 				//deletes the fragment
-				db.deleteUzu(fragments[currentPosition]);
-				//pager.setCurrentItem(currentPosition+1);
+				db.deleteUzu(fragments[pager.getCurrentItem()]);
+
+
+				pager.setCurrentItem(pager.getCurrentItem()+1);
 				/*Intent intent = new Intent(activity, MainActivity.class);
 
 				startActivity(intent); */		
 				//goes back to the previous page 'CollectionFragment'
-				finish();
+				//finish();
 				
 			}
 			
