@@ -12,7 +12,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 /**
  * Class that creates and manages the SQLite database.
  * 
- * @author Nem
+ * @author Nemanja Savic
  */
 public class DatabaseHandler extends SQLiteOpenHelper {
 

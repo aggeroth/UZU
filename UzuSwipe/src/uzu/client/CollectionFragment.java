@@ -64,13 +64,15 @@ public class CollectionFragment extends Fragment {
 			uzuFragments.add(uz);
 		}
 
+		//create a new view with the fragment collection layout
 		View view = (LinearLayout) inflater.inflate(
 				R.layout.fragment_collection, container, false);
 
+		//create a new list view with the items scanned
 		ListView listView = (ListView) view.findViewById(R.id.itemCollection);
 
 		ArrayAdapter<UzuFragment> itemAdapter = new ArrayAdapter<UzuFragment>(
-				activity, android.R.layout.simple_list_item_multiple_choice,
+				activity, android.R.layout.simple_list_item_1,
 				uzuFragments.toArray(new UzuFragment[0]));
 
 		listView.setAdapter(itemAdapter);
@@ -87,7 +89,7 @@ public class CollectionFragment extends Fragment {
 				startActivity(intent);
 			}
 		});
-		
+		//creating a array to an arraylist
 		uzuFrag = uzuFragments;
 		return view;
 	}

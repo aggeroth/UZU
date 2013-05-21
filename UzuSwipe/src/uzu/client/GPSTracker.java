@@ -28,17 +28,17 @@ public class GPSTracker extends Service implements LocationListener {
     private final Context mContext;
  
     // flag for GPS status
-    boolean isGPSEnabled = false;
+    private boolean isGPSEnabled = false;
  
     // flag for network status
-    boolean isNetworkEnabled = false;
+    private boolean isNetworkEnabled = false;
  
     // flag for GPS status
-    boolean canGetLocation = false;
+    private boolean canGetLocation = false;
  
-    Location location; // location
-    double latitude; // latitude
-    double longitude; // longitude
+    private Location location; // location
+    private double latitude; // latitude
+    private double longitude; // longitude
  
     /** The minimum distance to change Updates in meters */
     private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10; // 1 meters
@@ -60,7 +60,7 @@ public class GPSTracker extends Service implements LocationListener {
     
     /**
      * Retrieves the current location of the mobile device.
-     * @return location current location of the mobide device
+     * @return location current location of the mobile device
      */
     public Location getLocation() {
         try {
@@ -74,6 +74,8 @@ public class GPSTracker extends Service implements LocationListener {
                     .isProviderEnabled(LocationManager.NETWORK_PROVIDER);  
             if (!isGPSEnabled && !isNetworkEnabled) {
                 // no network provider is enabled     	
+            	//location = null; 
+            	showSettingsAlert();
             } else {
                 this.canGetLocation = true;
                 // if GPS Enabled get lat/long using GPS Services
@@ -95,29 +97,26 @@ public class GPSTracker extends Service implements LocationListener {
                     }
                 }
                 // First get location from Network Provider
-                /*if (isNetworkEnabled) {
+                if (isNetworkEnabled) {
                     locationManager.requestLocationUpdates(
-                    		//GPS_PROVIDER
-                    		//NETWORK_PROVIDER
                             LocationManager.NETWORK_PROVIDER,
                             MIN_TIME_BW_UPDATES,
                             MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
                     Log.d("Network", "Network");
                     if (locationManager != null) {
                         location = locationManager
-                        		//NETWORK_PROVIDER
-                        		//GPS_PROVIDER
-                                .getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                        		.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
                         if (location != null) {
                             latitude = location.getLatitude();
                             longitude = location.getLongitude();
                         }
                     }
-                }*/              
+                }              
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         return location;
     }
      
