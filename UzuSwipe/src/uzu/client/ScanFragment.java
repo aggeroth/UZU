@@ -185,32 +185,8 @@ public class ScanFragment extends Fragment {
 								scanSize
 										+ " new uzus found! Would you like to go to your Collection? (Just press no for now please)")
 						.setCancelable(false)
-						.setPositiveButton("Yes",
-								new DialogInterface.OnClickListener() {
-									public void onClick(DialogInterface dialog,
-											int id) {
-										// if this button is clicked, close
-										// current activity
-										
-										CollectionFragment fragment = new CollectionFragment();
-										ScanFragment scanFragment = new ScanFragment();
-										FragmentManager fragmentManager = getFragmentManager();
-										FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-										
-										fragmentTransaction.replace(android.R.id.content, fragment);
-										fragmentTransaction.detach(scanFragment);
-										
-										fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-										fragmentTransaction.addToBackStack(null);
-										fragmentTransaction.commit();
-																	
-										
-										//mainActivity.tab.setTabListener(mainActivity.scanTab);
-										
-										
-									}
-								})
-						.setNegativeButton("No",
+						
+						.setNegativeButton("OK",
 								new DialogInterface.OnClickListener() {
 									public void onClick(DialogInterface dialog,
 											int id) {
