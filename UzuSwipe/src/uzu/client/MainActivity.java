@@ -18,7 +18,6 @@ import android.view.Menu;
  * The class initializes all the fragments used in the application.
  */
 public class MainActivity extends Activity {
-	
 	/**
 	 * Creates Action Bar and Tabs with three Fragments.
 	 */

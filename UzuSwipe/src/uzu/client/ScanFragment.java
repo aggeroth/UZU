@@ -15,6 +15,8 @@ import org.apache.http.protocol.HttpContext;
 
 import com.example.uzuswipe.R;
 
+import android.app.ActionBar;
+import android.app.ActionBar.TabListener;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.FragmentManager;
@@ -33,6 +35,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TabHost;
 import android.widget.TextView;
 
 public class ScanFragment extends Fragment {
@@ -46,12 +49,14 @@ public class ScanFragment extends Fragment {
 	List<Uzu> uzuList2;
 	int scanSize;
 	
+	MainActivity mainActivity;
 	static final String url = "http://www.aggeroth.com:8080/RestEasyServices/ocean/trawl/";
 	
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
 		if(container == null){
 			return null;
 		}
+		
 		Activity activity = getActivity();
 		View view = (RelativeLayout)inflater.inflate(R.layout.fragment_scan, container, false);
 		
@@ -178,7 +183,7 @@ public class ScanFragment extends Fragment {
 				alertDialogBuilder
 						.setMessage(
 								scanSize
-										+ " new uzus found! Would you like to go to your Collection?")
+										+ " new uzus found! Would you like to go to your Collection? (Just press no for now please)")
 						.setCancelable(false)
 						.setPositiveButton("Yes",
 								new DialogInterface.OnClickListener() {
@@ -186,11 +191,23 @@ public class ScanFragment extends Fragment {
 											int id) {
 										// if this button is clicked, close
 										// current activity
+										
 										CollectionFragment fragment = new CollectionFragment();
+										ScanFragment scanFragment = new ScanFragment();
 										FragmentManager fragmentManager = getFragmentManager();
 										FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+										
 										fragmentTransaction.replace(android.R.id.content, fragment);
+										fragmentTransaction.detach(scanFragment);
+										
+										fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+										fragmentTransaction.addToBackStack(null);
 										fragmentTransaction.commit();
+																	
+										
+										//mainActivity.tab.setTabListener(mainActivity.scanTab);
+										
+										
 									}
 								})
 						.setNegativeButton("No",
