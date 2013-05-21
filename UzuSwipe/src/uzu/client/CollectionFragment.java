@@ -1,9 +1,7 @@
 package uzu.client;
 
 import java.util.ArrayList;
-
 import com.example.uzuswipe.R;
-
 import android.app.Activity;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -17,30 +15,49 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 
+/**
+ * This class is responsible for the collection tab which displays a list of all
+ * Uzu items that have been picked up
+ * 
+ * @author Merisha & Nem
+ * 
+ */
 public class CollectionFragment extends Fragment {
 
-	ScanFragment scanFragment;
+	/**
+	 * Contains all Uzu items to be displayed
+	 */
 	static ArrayList<UzuFragment> uzuFrag = new ArrayList<UzuFragment>();
-	ArrayAdapter<UzuFragment> itemAdapter;
 
+	/**
+	 * Getter for Uzu Fragments
+	 * @return UzuFragment[]
+	 */
 	static public UzuFragment[] getUzuFragements() {
 		return uzuFrag.toArray(new UzuFragment[0]);
 	}
 
+	/**
+	 * Method that constructs the view for the collection page.
+	 */
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		ArrayList<UzuFragment> uzuFragments = new ArrayList<UzuFragment>();
+		
 		if (container == null) {
 			return null;
 		}
+		
 		final Activity activity = getActivity();
 		DatabaseHandler db = new DatabaseHandler(activity);
 		Uzu[] uzus = db.getAllUzus();
-//double longitude, double latitude, String subject, String message, byte[] image, int life, int death, int categoryID)
+
+		//Add Uzu items to Uzu ArrayList
 		for (int i = 0; i < uzus.length; i++) {
-			UzuFragment uz = UzuFragment.newInstance(uzus[i].getLongitude(), uzus[i].getLatitude(), uzus[i].getSubject(),
-													 uzus[i].getMessage(), uzus[i].getImage(), uzus[i].getLife(),
-													 /*uzus[i].getDeath(),*/ uzus[i].getCategoryID());
+			UzuFragment uz = UzuFragment.newInstance(uzus[i].getLongitude(),
+					uzus[i].getLatitude(), uzus[i].getSubject(),
+					uzus[i].getMessage(), uzus[i].getImage(),
+					uzus[i].getLife(), uzus[i].getCategoryID());
 			uz.setSubject(uzus[i].getSubject());
 			uz.setUzuID(uzus[i].getUzuID());
 			uz.setImage(uzus[i].getImage());
@@ -57,28 +74,21 @@ public class CollectionFragment extends Fragment {
 				uzuFragments.toArray(new UzuFragment[0]));
 
 		listView.setAdapter(itemAdapter);
-		//itemAdapter.notifyDataSetChanged();
+
 		// Specifying what happens when one item is clicked.
 		listView.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				
+
 				Intent intent = new Intent(activity, ItemActivity.class);
 
 				intent.putExtra("position", position);
 				startActivity(intent);
 			}
 		});
+		
 		uzuFrag = uzuFragments;
 		return view;
-	}
-
-	public static ArrayList<UzuFragment> getUzuFrag() {
-		return uzuFrag;
-	}
-
-	public static void setUzuFrag(ArrayList<UzuFragment> uzuFrag) {
-		CollectionFragment.uzuFrag = uzuFrag;
 	}
 }

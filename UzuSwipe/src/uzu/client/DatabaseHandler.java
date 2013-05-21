@@ -3,7 +3,6 @@ package uzu.client;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -14,19 +13,18 @@ import android.database.sqlite.SQLiteOpenHelper;
  * Class that creates and manages the SQLite database.
  * 
  * @author Nem
- *
- */
-/**
- * @author Nem
- *
  */
 public class DatabaseHandler extends SQLiteOpenHelper {
 
+	/**
+	 * Constructor for database handler
+	 * @param context
+	 */
 	public DatabaseHandler(Context context) {
 		super(context, "Uzu", null, 1);
 	}
-
-	/* 
+	
+	/**
 	 * This function creates the Uzu table
 	 */
 	@Override
@@ -36,7 +34,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 				"life INTEGER, death DATE, categoryID INTEGER)";
 		db.execSQL(CREATE_UZU_TABLE);
 	}
-	/*
+	
+	/**
 	 * This function is used upgrade the Uzu table.
 	 */
 	@Override
@@ -80,34 +79,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	    Cursor cursor = db.rawQuery(selectQuery, null);
 	    
         if (cursor != null) {
-        	System.out.println(cursor);
-        	System.out.println("meow true");
             return true;
         }
         else{
-        	System.out.println("meow false");
         	return false;
         }
-		
-		
-		
-		
-		
-//		System.out.println("meow");
-//		SQLiteDatabase db = this.getReadableDatabase();
-//		System.out.println("meow2");
-//        Cursor cursor = db.query("Uzu", new String[] { "uzuID",
-//                "longitude", "latitude", "subjectHeading", "messageBody", "image", "birth" , "life" , "death", "categoryID" }, "uzuID" + "=?",
-//                new String[] { String.valueOf(uzuID) }, null, null, null, null);
-//        System.out.println("meow3");
-//        if (cursor != null) {
-//        	System.out.println("meow true");
-//            return true;
-//        }
-//        else{
-//        	System.out.println("meow false");
-//        	return false;
-//        }
     }
 	
 	/**
@@ -150,6 +126,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	    return uzuArray;
 	}
 	
+	/**
+	 * This method returns the size of the current SQLite database size.
+	 * @return
+	 */
 	public int getDatabaseSize() {
 	    List<Uzu> uzuList = new ArrayList<Uzu>();
 	    String selectQuery = "SELECT  * FROM Uzu";
