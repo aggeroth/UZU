@@ -7,11 +7,6 @@ Displays collection of Uzu items-->
     android:layout_height="match_parent"
     android:orientation="vertical" >
     
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/collection_message" />
-    
     <ListView
         android:id="@+id/itemCollection"
         android:layout_height="fill_parent"

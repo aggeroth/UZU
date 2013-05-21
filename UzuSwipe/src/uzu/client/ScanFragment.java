@@ -224,7 +224,7 @@ public class ScanFragment extends Fragment {
 				alertDialogBuilder
 						.setMessage(
 								scanSize
-										+ " new uzus found! Would you like to go to your Collection? (Just press no for now please)")
+										+ " new uzus found and added to your collection.")
 						.setCancelable(false)
 
 						.setNegativeButton("OK",

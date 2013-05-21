@@ -70,7 +70,10 @@ public class DropFragment extends Fragment {
 	private EditText textField;
 	
 	//NumberPicker for the Uzu item lifetime.
-	private NumberPicker days, hours, mins;
+	private NumberPicker days;
+	private NumberPicker hours;
+	private NumberPicker mins;
+	
 	private int total;
 	
 	
@@ -159,8 +162,6 @@ public class DropFragment extends Fragment {
 	    			String subject = subjectField.getText().toString();
 					String text = textField.getText().toString();
 					GPSTracker tracker = new GPSTracker(activity);
-					subjectField.setText("");
-					textField.setText("");
 					int life = total;
 					
 					//Construct an Uzu item.
@@ -190,7 +191,7 @@ public class DropFragment extends Fragment {
 					//Create JSONObject from the Uzu item.
 					JSONObject newItem = UzuJSONParser.createJSON(item);
 					
-					clearUzuImageAndResetButton();
+					//clearUzuImageAndResetButton();
 					
 					//Construct the UzuDropService with URL and the new Uzu item.
 					UzuDropService uzuDrop = new UzuDropService(SERVER_URL, newItem);	
@@ -308,8 +309,17 @@ public class DropFragment extends Fragment {
 		 */
 		protected void onPostExecute(String results) {
 			if (results!=null) {
-				Toast.makeText(activity, results, Toast.LENGTH_SHORT).show();
-			}	
+				clearUzuImageAndResetButton();
+				subjectField.setText("");
+				textField.setText("");
+				days.setValue(DAY_END);
+				hours.setValue(0);
+				mins.setValue(0);
+				Toast.makeText(activity, "Uzu item has been dropped!", Toast.LENGTH_LONG).show();
+			}
+			else {
+				Toast.makeText(activity, "Could not drop an uzu item. Please try again.", Toast.LENGTH_LONG).show();
+			}
 			buttonDrop.setClickable(true);
 		}
 	}

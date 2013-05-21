@@ -7,12 +7,6 @@ UI for ScanFragment -->
     android:layout_height="match_parent"
     android:orientation="vertical" >
     
-    <TextView
-        android:id="@+id/return_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/scan_message" />
-    
     <!-- Button for scanning Uzu items. -->
     <ImageButton
         android:id="@+id/imageButton1"

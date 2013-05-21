@@ -4,34 +4,24 @@
     android:layout_height="match_parent" >
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="26dp"
-        android:layout_marginTop="28dp"
-        android:text="@string/subject"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:layout_below="@+id/textView2"
+        android:layout_marginLeft="52dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/content" />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/textView1"
-        android:layout_marginLeft="28dp"
-        android:layout_toRightOf="@+id/textView1"
+        android:layout_alignLeft="@+id/textView3"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="19dp"
         android:text="@string/subject_line"
         android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView1"
-        android:layout_below="@+id/textView1"
-        android:layout_marginTop="35dp"
-        android:text="@string/content" />
 
     <ImageView
         android:id="@+id/uzuItemImage"
@@ -39,8 +29,8 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/textView3"
         android:layout_below="@+id/textView3"
+        android:layout_marginTop="26dp"
         android:contentDescription="Inserted Image."
-        android:layout_marginTop="53dp"
         android:src="@drawable/ic_launcher" />
 
 </RelativeLayout>
